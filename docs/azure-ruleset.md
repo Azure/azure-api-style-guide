@@ -54,6 +54,10 @@ Operation should have a summary or description.
 
 If the operation returns a list that is potentially large, it should [support pagination](../opeapi-style-guidelines.md#).
 
+### az-parameter-default-not-allowed
+
+A required parameter should not specify a default value.
+
 ### az-parameter-description
 
 All parameters should have a description.

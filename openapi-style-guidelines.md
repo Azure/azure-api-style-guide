@@ -169,6 +169,10 @@ Format must be one of the values [defined by OpenAPI][openapi-data-types] and re
 
 Integer properties must specify a format of either `int32` or `int64`.
 
+### Default
+
+Required parameters should not specify a default value.
+
 <!-- --------------------------------------------------------------- -->
 
 ## Schemas

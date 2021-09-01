@@ -104,15 +104,15 @@ rules:
     then:
       function: pagination-response
 
-  az-parameter-names-convention:
-    description: Parameter names should conform to Azure naming conventions.
-    message: "{{error}}"
+  az-parameter-default-not-allowed:
+    description: A required parameter should not specify a default value.
     severity: warn
     given:
-    - $.paths[*].parameters.*
-    - $.paths.*[get,put,post,patch,delete,options,head].parameters.*
+    - $.paths[*].parameters.[?(@.required)]
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.required)]
     then:
-      function: param-names
+      field: default
+      function: falsy
 
   az-parameter-description:
     description: All parameters should have a description.
@@ -124,6 +124,16 @@ rules:
     then:
       field: description
       function: truthy
+
+  az-parameter-names-convention:
+    description: Parameter names should conform to Azure naming conventions.
+    message: "{{error}}"
+    severity: warn
+    given:
+    - $.paths[*].parameters.*
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.*
+    then:
+      function: param-names
 
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
