@@ -1,0 +1,259 @@
+extends: spectral:oas
+functionsDir: './functions'
+functions:
+  - check-version
+  - consistent-response-body
+  - error-response
+  - operation-id
+  - pagination-response
+  - param-names
+  - patch-content-type
+  - unique-param-names
+rules:
+  info-contact: off
+  no-$ref-siblings: off
+  oas2-api-host: off
+  oas2-api-schemes: off
+  oas2-unused-definition: off
+  openapi-tags: off
+  operation-description: off
+  operation-tags: off
+  operation-tag-defined: off
+
+  az-consistent-response-body:
+    description: Ensure the get, put, and patch response body schemas are consistent.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2']
+    given: $.paths.*
+    then:
+      function: consistent-response-body
+
+  az-default-response:
+    description: All operations should have a default (error) response.
+    message: Operation is missing a default response.
+    severity: warn
+    given: $.paths.*.*.responses
+    then:
+      field: default
+      function: truthy
+
+  az-delete-204-response:
+    description: A delete operation should have a 204 response.
+    message: A delete operation should have a `204` response.
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*].delete.responses
+    then:
+      field: '204'
+      function: truthy
+
+  az-error-response:
+    description: Error response body should conform to Microsoft Azure API Guidelines.
+    message: "{{error}}"
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*][*].responses
+    then:
+      function: error-response
+
+  az-lro-headers:
+    description: A 202 response should include an Operation-Location response header.
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*][*].responses[?(@property == '202')]
+    then:
+      field: headers.Operation-location
+      function: truthy
+
+  az-operation-id:
+    description: OperationId should conform to Azure API Guidelines
+    message: '{{error}}'
+    severity: warn
+    given:
+    - $.paths.*[get,put,post,patch,delete,options,head]
+    then:
+      function: operation-id
+  
+  az-operation-summary-or-description:
+    description: Operation should have a summary or description.
+    message: Operation should have a summary or description.
+    severity: warn
+    given:
+    - $.paths[*][?( @property === 'get' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'put' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'post' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'patch' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'delete' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'options' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'head' && !@.summary && !@.description )]
+    - $.paths[*][?( @property === 'trace' && !@.summary && !@.description )]
+    then:
+      function: falsy
+
+  az-pagination-response:
+    description: An operation that returns a list that is potentially large should support pagination.
+    message: "{{error}}"
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths.*[get,post]
+    then:
+      function: pagination-response
+
+  az-parameter-names-convention:
+    description: Parameter names should conform to Azure naming conventions.
+    message: "{{error}}"
+    severity: warn
+    given:
+    - $.paths[*].parameters.*
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.*
+    then:
+      function: param-names
+
+  az-parameter-description:
+    description: All parameters should have a description.
+    message: Parameter should have a description.
+    severity: warn
+    given:
+    - $.paths[*].parameters.*
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.*
+    then:
+      field: description
+      function: truthy
+
+  # Patch request body content type should be application/merge-patch+json
+  az-patch-content-type:
+    description: The request body content type for patch operations should be JSON merge patch.
+    message: "{{error}}"
+    severity: warn
+    formats: ["oas2"]
+    given: $
+    then:
+      function: patch-content-type
+
+  # DO limit your URLs characters to 0-9 A-Z a-z - . _ ~ :
+  az-path-characters:
+    description: Path should contain only recommended characters.
+    message: Path contains non-recommended characters.
+    severity: hint
+    formats: ["oas2", "oas3"]
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        # Check each path segment individually and ignore param segments
+        # Note: the ':' is only allowed in the final path segment
+        match: "^(/([0-9A-Za-z._~-]+|{[^}]+}))*(/([0-9A-Za-z._~:-]+|{[^}]*}(:[0-9A-Za-z._~-]+)?))$"
+
+  az-post-201-response:
+    description: Using post for a create operation is discouraged.
+    message: Using post for a create operation is discouraged.
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*].post.responses
+    then:
+      field: '201'
+      function: falsy
+
+  az-property-description:
+    description: All schema properties should have a description.
+    message: Property should have a description.
+    severity: warn
+    resolved: false
+    given: $..[?(@.type === 'object' && @.properties)].properties[*]
+    then:
+      field: description
+      function: truthy
+
+  # https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#172-casing
+  az-property-names-convention:
+    description: Property names should be lower camel case.
+    message: Property name should be lower camel case.
+    severity: warn
+    # This rule can report false positives if run on the resolved spec.
+    # Issue: https://github.com/stoplightio/spectral/issues/1316
+    resolved: false
+    given: $..[?(@.type === 'object' && @.properties)].properties.*~
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+
+  az-request-body-not-allowed:
+    description: A get or delete operation must not accept a body parameter.
+    severity: error
+    formats: ["oas2"]
+    given:
+    - $.paths[*].get.parameters[*]
+    - $.paths[*].delete.parameters[*]
+    then:
+      field: in
+      function: pattern
+      functionOptions:
+        notMatch: "/^body$/"
+
+  az-schema-description-or-title:
+    description: All schemas should have a description or title.
+    message: Schema should have a description or title.
+    severity: warn
+    given:
+    - $.definitions[?(!@.description && !@.title)]
+    then:
+      function: falsy
+
+  az-schema-names-convention:
+    description: Schema names should be Pascal case.
+    message: Schema name should be Pascal case.
+    severity: hint
+    formats: ["oas2"]
+    given: $.definitions.*~
+    then:
+      function: casing
+      functionOptions:
+        type: pascal
+
+  # All success responses except 202 & 204 should define a response body
+  # ref: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#1321-put
+  az-success-response-body:
+    description: All success responses except 202 & 204 should define a response body.
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*][*].responses[?(@property >= 200 && @property < 300 && @property != '202' && @property != '204')]
+    then:
+      field: schema
+      function: truthy
+
+  az-unique-parameter-names:
+    description: All parameter names for an operation should be case-insensitive unique.
+    message: "{{error}}"
+    severity: warn
+    formats: ["oas2"]
+    resolved: true
+    given: $.paths[*]
+    then:
+      function: unique-param-names
+
+  az-version-convention:
+    description: API version should be a date in YYYY-MM-DD format, optionally suffixed with '-preview'.
+    severity: error
+    formats: ["oas2", "oas3"]
+    given: $.info.version
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\\d\\d\\d\\d-\\d\\d-\\d\\d(-preview)?$"
+
+  az-version-policy:
+    description: Specify API version using `api-version` query parameter, not in path.
+    message: "{{error}}"
+    severity: warn
+    formats: ["oas2"]
+    given: $
+    then:
+      function: check-version

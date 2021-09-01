@@ -1,14 +1,45 @@
-# Project
+# Azure Spectral Ruleset
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This repository contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check conformance
+to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and
+the [Azure OpenAPI Style Guidelines](./openapi-style-guidelines.md).
 
-As the maintainer of this project, please make a few updates:
+## How to use
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+### Install Spectral
+
+`npm install -g @stoplightio/spectral`
+
+### Usage
+
+You can specify the ruleset directly on the command line:
+
+`spectral lint -r https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml <api definition file>`
+
+Or you can create a Spectral configuration file (`.spectral.yaml`) that references the ruleset:
+
+```yaml
+extends:
+  - https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml
+```
+
+### Example
+
+```bash
+spectral lint -r https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml petstore.yaml
+```
+
+### Using the Spectral VSCode extension
+
+There is a [Spectral VSCode extension](https://marketplace.visualstudio.com/items?itemName=stoplight.spectral) that will run the Spectral linter on an open API definition file and show errors right within VSCode.  You can use this ruleset with the Spectral VSCode extension.
+
+1. Install the Spectral VSCode extension from the extensions tab in VSCode.
+2. Create a Spectral configuration file (`.spectral.yaml`) in the root directory of your project
+as shown above.
+3. Set `spectral.rulesetFile` to the name of this configuration file in your VSCode settings.
+
+Now when you open an API definition in this project, it should highlight lines with errors.
+You can also get a full list of problems in the file by opening the "Problems panel" with "View / Problems".  In the Problems panel you can filter to show or hide errors, warnings, or infos.
 
 ## Contributing
 
