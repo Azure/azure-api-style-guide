@@ -175,6 +175,14 @@ test('az-operation-id should find no errors', () => {
           operationId: 'noun_delete',
         },
       },
+      '/api/test6': {
+        put: {
+          operationId: 'noun_update',
+          200: {
+            description: 'Success',
+          },
+        },
+      },
     },
   };
   return linter.run(oasDoc).then((results) => {

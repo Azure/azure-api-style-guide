@@ -42,7 +42,7 @@ The `Verb` of the `operationId` should be or contain a specific value depending 
 | operation method | verb should contain | notes  |
 | ---------------- | ------------------- | ------ |
 | get              | "Get" or "List"     | should be "List" if response is pageable |
-| put              | "Create"            | could be "CreateOrUpdate" |
+| put              | "Create" or "Update" | could be "CreateOrUpdate" |
 | patch            | "Update"            | could be "CreateOrUpdate" |
 | delete           | "Delete"            | |
 
@@ -52,7 +52,7 @@ Operation should have a summary or description.
 
 ### az-pagination-response
 
-If the operation returns a list that is potentially large, it should [support pagination](../opeapi-style-guidelines.md#).
+If the operation returns a list that is potentially large, it should [support pagination](../opeapi-style-guidelines.md#support-for-pagination).
 
 ### az-parameter-default-not-allowed
 
