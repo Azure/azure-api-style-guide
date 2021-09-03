@@ -1,7 +1,7 @@
 extends: spectral:oas
 functionsDir: './functions'
 functions:
-  - check-version
+  - version-policy
   - consistent-response-body
   - error-response
   - operation-id
@@ -266,4 +266,4 @@ rules:
     formats: ["oas2"]
     given: $
     then:
-      function: check-version
+      function: version-policy
