@@ -15,8 +15,10 @@
     "url": "https://github.com/Azure/azure-spectral-ruleset"
   },
   "devDependencies": {
-    "@stoplight/spectral-core": "^1.4.0",
-    "ajv": "^8.0.1",
+    "@stoplight/spectral-core": "1.4.0",
+    "@stoplight/spectral-ruleset-migrator": "^1.4.2",
+    "@stoplight/spectral-rulesets": "^1.2.4",
+    "ajv": "^8.6.2",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",

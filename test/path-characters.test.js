@@ -18,7 +18,7 @@ test('az-path-characters should find errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(3);
-    expect(results[0].path.join('.')).toBe('paths' /* ./api[]' */);
+    expect(results[0].path.join('.')).toBe('paths./api[]');
     expect(results[1].path.join('.')).toBe('paths./foo:bar/{baz}');
     expect(results[2].path.join('.')).toBe('paths./foo/{bar}:baz/qux');
   });

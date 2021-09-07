@@ -8,7 +8,7 @@ module.exports = (operation, _opts, paths) => {
   if (operation === null || typeof operation !== 'object') {
     return [];
   }
-  const path = paths.target || paths.given;
+  const path = paths.path || [];
 
   // responses is required property of an operation in OpenAPI 2.0, so if
   // isn't present this will be flagged elsewhere -- just return;

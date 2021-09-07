@@ -18,7 +18,7 @@ module.exports = (targetVal, _opts, paths) => {
   if (targetVal === null || typeof targetVal !== 'object') {
     return [];
   }
-  const path = paths.target || paths.given || [];
+  const path = paths.path || [];
 
   const pathParams = targetVal.parameters ? targetVal.parameters.map((p) => p.name) : [];
 
