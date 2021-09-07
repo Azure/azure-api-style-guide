@@ -1,6 +1,5 @@
 // Check conformance to Azure parameter naming conventions:
-// - query parameters must be lower-camel-case
-//   - except "api-version"
+// - path and query parameters must be camel case
 // - header parameters must be kebab-case
 
 module.exports = (targetVal, _opts, paths) => {
@@ -15,11 +14,11 @@ module.exports = (targetVal, _opts, paths) => {
     return [];
   }
 
-  if (targetVal.in === 'query' && targetVal.name !== 'api-version') {
+  if (['path', 'query'].includes(targetVal.in) && targetVal.name !== 'api-version') {
     if (!targetVal.name.match(/^[a-z][a-z0-9]*([A-Z][a-z0-9]+)*$/)) {
       return [
         {
-          message: `query parameter name "${targetVal.name}" should be lower camel case.`,
+          message: `Parameter name "${targetVal.name}" should be camel case.`,
           path: [...path, 'name'],
         },
       ];

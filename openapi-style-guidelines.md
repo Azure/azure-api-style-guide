@@ -155,7 +155,7 @@ Error response should contain a `x-ms-error-code` response header.
 
 ### Parameter names
 
-Query parameter names should be [camel case][wikipedia-camel-case]; header parameter names should be [kebab case][wikipedia-kebab-case].
+Path and query parameter names should be [camel case][wikipedia-camel-case]; header parameter names should be [kebab case][wikipedia-kebab-case].
 
 All parameter names for an operation -- including parameters defined at the path level -- should be case-insensitive unique.
 

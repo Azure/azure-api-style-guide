@@ -172,8 +172,8 @@ rules:
 
   # https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#172-casing
   az-property-names-convention:
-    description: Property names should be lower camel case.
-    message: Property name should be lower camel case.
+    description: Property names should be camel case.
+    message: Property name should be camel case.
     severity: warn
     # This rule can report false positives if run on the resolved spec.
     # Issue: https://github.com/stoplightio/spectral/issues/1316

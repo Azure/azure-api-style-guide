@@ -60,7 +60,7 @@ All parameters should have a description.
 
 ### az-parameter-names-convention
 
-Query parameter names should be lowerCamelCase; header parameter names should be kebab case.
+Path and query parameter names should be camel case (except `api-version`); header parameter names should be kebab case.
 
 ### az-patch-content-type
 
