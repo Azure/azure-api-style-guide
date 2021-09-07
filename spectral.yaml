@@ -1,7 +1,6 @@
 extends: spectral:oas
 functionsDir: './functions'
 functions:
-  - version-policy
   - consistent-response-body
   - error-response
   - operation-id
@@ -9,6 +8,7 @@ functions:
   - param-names
   - patch-content-type
   - unique-param-names
+  - version-policy
 rules:
   info-contact: off
   no-$ref-siblings: off
@@ -42,8 +42,7 @@ rules:
     description: A delete operation should have a 204 response.
     message: A delete operation should have a `204` response.
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2','oas3']
     given: $.paths[*].delete.responses
     then:
       field: '204'
@@ -51,10 +50,9 @@ rules:
 
   az-error-response:
     description: Error response body should conform to Microsoft Azure API Guidelines.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2']
     given: $.paths[*][*].responses
     then:
       function: error-response
@@ -62,8 +60,7 @@ rules:
   az-lro-headers:
     description: A 202 response should include an Operation-Location response header.
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2']
     given: $.paths[*][*].responses[?(@property == '202')]
     then:
       field: headers.Operation-location
@@ -96,7 +93,7 @@ rules:
 
   az-pagination-response:
     description: An operation that returns a list that is potentially large should support pagination.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
     formats: ['oas2']
     given:
@@ -127,7 +124,7 @@ rules:
 
   az-parameter-names-convention:
     description: Parameter names should conform to Azure naming conventions.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
     given:
     - $.paths[*].parameters.*
@@ -138,9 +135,9 @@ rules:
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
     description: The request body content type for patch operations should be JSON merge patch.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
-    formats: ["oas2"]
+    formats: ['oas2']
     given: $
     then:
       function: patch-content-type
@@ -150,21 +147,20 @@ rules:
     description: Path should contain only recommended characters.
     message: Path contains non-recommended characters.
     severity: hint
-    formats: ["oas2", "oas3"]
+    formats: ['oas2', 'oas3']
     given: $.paths.*~
     then:
       function: pattern
       functionOptions:
         # Check each path segment individually and ignore param segments
         # Note: the ':' is only allowed in the final path segment
-        match: "^(/([0-9A-Za-z._~-]+|{[^}]+}))*(/([0-9A-Za-z._~:-]+|{[^}]*}(:[0-9A-Za-z._~-]+)?))$"
+        match: '^(/([0-9A-Za-z._~-]+|{[^}]+}))*(/([0-9A-Za-z._~:-]+|{[^}]*}(:[0-9A-Za-z._~-]+)?))$'
 
   az-post-201-response:
     description: Using post for a create operation is discouraged.
     message: Using post for a create operation is discouraged.
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2']
     given: $.paths[*].post.responses
     then:
       field: '201'
@@ -197,22 +193,23 @@ rules:
   az-request-body-not-allowed:
     description: A get or delete operation must not accept a body parameter.
     severity: error
-    formats: ["oas2"]
+    formats: ['oas2']
     given:
-    - $.paths[*].get.parameters[*]
-    - $.paths[*].delete.parameters[*]
+    - $.paths[*].[get,delete].parameters[*]
     then:
       field: in
       function: pattern
       functionOptions:
-        notMatch: "/^body$/"
+        notMatch: '/^body$/'
 
   az-schema-description-or-title:
     description: All schemas should have a description or title.
     message: Schema should have a description or title.
     severity: warn
+    formats: ['oas2', 'oas3']
     given:
     - $.definitions[?(!@.description && !@.title)]
+    - $.components.schemas[?(!@.description && !@.title)]
     then:
       function: falsy
 
@@ -220,7 +217,7 @@ rules:
     description: Schema names should be Pascal case.
     message: Schema name should be Pascal case.
     severity: hint
-    formats: ["oas2"]
+    formats: ['oas2']
     given: $.definitions.*~
     then:
       function: casing
@@ -232,8 +229,7 @@ rules:
   az-success-response-body:
     description: All success responses except 202 & 204 should define a response body.
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2']
     given: $.paths[*][*].responses[?(@property >= 200 && @property < 300 && @property != '202' && @property != '204')]
     then:
       field: schema
@@ -241,10 +237,9 @@ rules:
 
   az-unique-parameter-names:
     description: All parameter names for an operation should be case-insensitive unique.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
-    formats: ["oas2"]
-    resolved: true
+    formats: ['oas2']
     given: $.paths[*]
     then:
       function: unique-param-names
@@ -252,18 +247,18 @@ rules:
   az-version-convention:
     description: API version should be a date in YYYY-MM-DD format, optionally suffixed with '-preview'.
     severity: error
-    formats: ["oas2", "oas3"]
+    formats: ['oas2', 'oas3']
     given: $.info.version
     then:
       function: pattern
       functionOptions:
-        match: "^\\d\\d\\d\\d-\\d\\d-\\d\\d(-preview)?$"
+        match: '^\\d\\d\\d\\d-\\d\\d-\\d\\d(-preview)?$'
 
   az-version-policy:
     description: Specify API version using `api-version` query parameter, not in path.
-    message: "{{error}}"
+    message: '{{error}}'
     severity: warn
-    formats: ["oas2"]
+    formats: ['oas2']
     given: $
     then:
       function: version-policy

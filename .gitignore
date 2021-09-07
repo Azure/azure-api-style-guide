@@ -275,6 +275,7 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 coverage/
+.eslintcache
 
 # Visual Studio 6 build log
 *.plg
