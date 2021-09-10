@@ -171,7 +171,7 @@ rules:
     message: Property should have a description.
     severity: warn
     resolved: false
-    given: $..[?(@.type === 'object' && @.properties)].properties[*]
+    given: $..[?(@.type === 'object' && @.properties)].properties[?(@.$ref === undefined)]
     then:
       field: description
       function: truthy
