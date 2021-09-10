@@ -7,7 +7,7 @@ module.exports = (targetVal, _opts, paths) => {
     return [];
   }
 
-  const path = paths.path || [];
+  const path = paths.path || paths.target || [];
 
   // These errors will be caught elsewhere, so silently ignore here
   if (!targetVal.in || !targetVal.name) {

@@ -11,7 +11,7 @@ module.exports = (operation, _opts, paths) => {
   if (operation === null || typeof operation !== 'object') {
     return [];
   }
-  const path = paths.path || [];
+  const path = paths.path || paths.target || [];
 
   const errors = [];
 

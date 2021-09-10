@@ -162,7 +162,7 @@ function validateErrorResponse(errorResponse, responsePath) {
 
 module.exports = function errorResponse(responses, _opts, paths) {
   const errors = [];
-  const path = paths.path || [];
+  const path = paths.path || paths.target || [];
 
   // Note: az-default-response rule will flag missing default response
   if (responses.default) {
