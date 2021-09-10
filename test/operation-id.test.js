@@ -7,7 +7,7 @@ beforeAll(async () => {
   return linter;
 });
 
-test('az-operation-id should find operationId not Noun_Verb', async () => {
+test('az-operation-id should find operationId not Noun_Verb', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
@@ -31,7 +31,7 @@ test('az-operation-id should find operationId not Noun_Verb', async () => {
   });
 });
 
-test('az-operation-id should find operationId without standard verb', async () => {
+test('az-operation-id should find operationId without standard verb', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
@@ -63,7 +63,7 @@ test('az-operation-id should find operationId without standard verb', async () =
   });
 });
 
-test('az-operation-id should find operationId without standard verb', async () => {
+test('az-operation-id should find operationId without standard verb', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {

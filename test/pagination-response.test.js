@@ -7,7 +7,7 @@ beforeAll(async () => {
   return linter;
 });
 
-test('az-pagination-response should find missing x-ms-pageable extension', async () => {
+test('az-pagination-response should find missing x-ms-pageable extension', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
@@ -52,7 +52,7 @@ test('az-pagination-response should find missing x-ms-pageable extension', async
   });
 });
 
-test('az-pagination-response should find errors in value property', async () => {
+test('az-pagination-response should find errors in value property', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
@@ -137,7 +137,7 @@ test('az-pagination-response should find errors in value property', async () => 
   });
 });
 
-test('az-pagination-response should find errors in nextLink property', async () => {
+test('az-pagination-response should find errors in nextLink property', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {

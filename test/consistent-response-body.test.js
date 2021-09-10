@@ -7,7 +7,7 @@ beforeAll(async () => {
   return linter;
 });
 
-test('az-consistent-response-body should find errors', async () => {
+test('az-consistent-response-body should find errors', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
