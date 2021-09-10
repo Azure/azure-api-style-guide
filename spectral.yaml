@@ -252,7 +252,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: '^\\d\\d\\d\\d-\\d\\d-\\d\\d(-preview)?$'
+        match: '^\d\d\d\d-\d\d-\d\d(-preview)?$'
 
   az-version-policy:
     description: Specify API version using `api-version` query parameter, not in path.
