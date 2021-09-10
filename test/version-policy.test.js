@@ -7,6 +7,29 @@ beforeAll(async () => {
   return linter;
 });
 
+test('az-version-policy should find version in basePath', () => {
+  const oasDoc = {
+    swagger: '2.0',
+    basePath: '/v3/api',
+    paths: {
+      '/test1': {
+        get: {
+          responses: {
+            default: {
+              description: 'default',
+            },
+          },
+        },
+      },
+    },
+  };
+  return linter.run(oasDoc).then((results) => {
+    expect(results.length).toBe(2);
+    expect(results[0].path.join('.')).toBe('basePath');
+    expect(results[1].path.join('.')).toBe('paths./test1.get');
+  });
+});
+
 test('az-version-policy should find errors', () => {
   const oasDoc = {
     swagger: '2.0',

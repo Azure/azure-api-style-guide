@@ -18,7 +18,7 @@ function checkPaths(targetVal) {
       return [
         {
           message: `Version segment "${version}" in basePath violates Azure versioning policy.`,
-          path: basePath,
+          path: ['basePath'],
         },
       ];
     }
