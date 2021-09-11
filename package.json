@@ -1,5 +1,5 @@
 {
-  "name": "azure-spectral-ruleset",
+  "name": "azure-api-style-guide",
   "version": "0.0.1",
   "description": "Spectral rules for Azure API Guidelines",
   "main": "spectral.yaml",
@@ -7,12 +7,12 @@
     "lint": "eslint --cache --quiet --ext '.js' functions test",
     "lint-fix": "eslint --cache --quiet --ext '.js' --fix functions test",
     "test": "jest --coverage",
-    "update-toc": "markdown-toc -i openapi-style-guidelines.md"
+    "update-toc": "markdown-toc -i openapi-style-guide.md"
   },
   "author": "Mike Kistler",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/Azure/azure-spectral-ruleset"
+    "url": "https://github.com/Azure/azure-api-style-guide"
   },
   "devDependencies": {
     "@stoplight/spectral-core": "1.4.0",

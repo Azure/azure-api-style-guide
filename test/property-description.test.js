@@ -1,4 +1,3 @@
-const { stringify } = require('ajv');
 const { linterForRule } = require('./utils');
 
 let linter;
@@ -83,7 +82,7 @@ test('az-property-description should find errors', () => {
           },
           propZ: {
             $ref: '#/definitions/PropZ',
-          }
+          },
         },
       },
       PropZ: {
@@ -183,7 +182,7 @@ test('az-property-description should find no errors', () => {
           },
           propZ: {
             $ref: '#/definitions/PropZ',
-          }
+          },
         },
       },
       PropZ: {

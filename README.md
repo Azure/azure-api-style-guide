@@ -1,10 +1,12 @@
-# Azure Spectral Ruleset
+# Azure API Style Guide
 
-This repository contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check conformance
-to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and
-the [Azure OpenAPI Style Guidelines](./openapi-style-guidelines.md).
+This repository contains a [Style Guide for OpenAPI definitions](./openapi-style-guide.md) of Azure services.
+The Style Guide is a companion to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and the [OpenAPI 2.0 specification]().
 
-## How to use
+The repository also contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check 
+an API definition for conformance to the Azure API Guidelines and this Style Guide. 
+
+## How to use the Spectral Ruleset
 
 ### Install Spectral
 
@@ -14,19 +16,19 @@ the [Azure OpenAPI Style Guidelines](./openapi-style-guidelines.md).
 
 You can specify the ruleset directly on the command line:
 
-`spectral lint -r https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml <api definition file>`
+`spectral lint -r https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml <api definition file>`
 
 Or you can create a Spectral configuration file (`.spectral.yaml`) that references the ruleset:
 
 ```yaml
 extends:
-  - https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml
+  - https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml
 ```
 
 ### Example
 
 ```bash
-spectral lint -r https://raw.githubusercontent.com/azure/azure-spectral-ruleset/main/spectral.yaml petstore.yaml
+spectral lint -r https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml petstore.yaml
 ```
 
 ### Using the Spectral VSCode extension

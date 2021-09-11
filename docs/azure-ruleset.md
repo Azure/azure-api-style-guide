@@ -3,7 +3,7 @@
 The Azure ruleset incorporates a select set of the Spectral oas rules and a collection of custom rules
 to verify compliance to
 the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and
-the [Azure OpenAPI Style Guidelines](./openapi-style-guidelines.md).
+the [Azure OpenAPI Style Guidelines](./openapi-style-guide.md).
 
 ## Azure Custom Rules
 
