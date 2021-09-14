@@ -170,9 +170,7 @@ Every parameter should have a description.
 
 ### Format
 
-Format must be one of the values [defined by OpenAPI][openapi-data-types] and recognized by the Azure tooling.
-
-Integer properties must specify a format of either `int32` or `int64`.
+Format must be one of the values [defined by OpenAPI][openapi-data-types] or recognized by the Azure tooling.
 
 ### Default
 
@@ -196,9 +194,7 @@ Every schema property should have a description.
 
 ### Format
 
-Integer properties must specify a format of either `int32` and `int64`.
-
-Format must be one of the values [defined by OpenAPI][openapi-data-types] and recognized by the Azure tooling.
+Format must be one of the values [defined by OpenAPI][openapi-data-types] or recognized by the Azure tooling.
 
 <!-- Links -->
 
