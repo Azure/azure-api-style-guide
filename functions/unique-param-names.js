@@ -4,7 +4,7 @@
 // Return the "canonical" casing for a string.
 // Currently just lowercase but should be extended to convert kebab/camel/snake/Pascal.
 function canonical(name) {
-  return typeof (value) === 'string' ? name.toLowerCase() : name;
+  return typeof (name) === 'string' ? name.toLowerCase() : name;
 }
 
 // Accept an array and return a list of unique duplicate entries in canonical form.
