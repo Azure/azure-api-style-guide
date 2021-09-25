@@ -3,6 +3,7 @@ functionsDir: './functions'
 functions:
   - consistent-response-body
   - error-response
+  - has-header
   - operation-id
   - pagination-response
   - param-names
@@ -59,12 +60,14 @@ rules:
 
   az-lro-headers:
     description: A 202 response should include an Operation-Location response header.
+    message: A 202 response should include an Operation-Location response header.
     severity: warn
     formats: ['oas2']
     given: $.paths[*][*].responses[?(@property == '202')]
     then:
-      field: headers.Operation-location
-      function: truthy
+      function: has-header
+      functionOptions:
+        name: Operation-location
 
   az-operation-id:
     description: OperationId should conform to Azure API Guidelines
