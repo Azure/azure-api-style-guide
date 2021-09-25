@@ -22,7 +22,10 @@ module.exports = (targetVal, _opts, paths) => {
           path: [...path, 'name'],
         },
       ];
-    } if (!targetVal.name.match(/^[a-z][a-z0-9]*([A-Z][a-z0-9]+)*$/)) {
+    }
+  }
+  if (['path', 'query'].includes(targetVal.in) && targetVal.name !== 'api-version') {
+    if (!targetVal.name.match(/^[a-z][a-z0-9]*([A-Z][a-z0-9]+)*$/)) {
       return [
         {
           message: `Parameter name "${targetVal.name}" should be camel case.`,
@@ -40,6 +43,5 @@ module.exports = (targetVal, _opts, paths) => {
       ];
     }
   }
-
   return [];
 };

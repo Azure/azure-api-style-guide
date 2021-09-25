@@ -33,6 +33,18 @@ test('az-parameter-names-convention should find errors', () => {
             type: 'string',
             description: 'Camel case header',
           },
+          {
+            name: '$fooBar',
+            in: 'header',
+            type: 'string',
+            description: '$ should not be first character of header',
+          },
+          {
+            name: '@fooBar',
+            in: 'header',
+            type: 'string',
+            description: '@ should not be first character of header',
+          },
         ],
         get: {
           parameters: [
@@ -63,6 +75,7 @@ test('az-parameter-names-convention should find errors', () => {
     expect(results[2].path.join('.')).toBe('paths./test1/{test-id}.parameters.2.name');
     expect(results[3].path.join('.')).toBe('paths./test1/{test-id}.get.parameters.0.name');
     expect(results[4].path.join('.')).toBe('paths./test1/{test-id}.get.parameters.1.name');
+    expect(results[5].path.join('.')).toBe('paths./test1/{test-id}.get.parameters.1.name');
   });
 });
 
