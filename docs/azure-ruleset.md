@@ -96,6 +96,10 @@ A requestBody/body parameter should only be specified for HTTP methods where
 the HTTP 1.1 specification [RFC7231][RFC7231] has explicitly defined semantics for request bodies.
 RFC7231 states that the payload for both get and delete "has no defined semantics".
 
+### az-request-body-optional
+
+Flag a body parameter/request body that is not marked as required. This is a common oversight.
+
 ### az-schema-description-or-title
 
 All schemas should have a description or title.

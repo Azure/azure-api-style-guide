@@ -202,6 +202,17 @@ rules:
       functionOptions:
         notMatch: '/^body$/'
 
+  az-request-body-optional:
+    description: Flag optional request body -- common oversight.
+    message: The body parameter is not marked as required.
+    severity: hint
+    formats: ['oas2']
+    given:
+    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')]
+    then:
+      field: required
+      function: truthy
+
   az-schema-description-or-title:
     description: All schemas should have a description or title.
     message: Schema should have a description or title.
