@@ -74,7 +74,9 @@ test('az-parameter-names-convention should find errors', () => {
     expect(results[1].path.join('.')).toBe('paths./test1/{test-id}.parameters.1.name');
     expect(results[2].path.join('.')).toBe('paths./test1/{test-id}.parameters.2.name');
     expect(results[3].path.join('.')).toBe('paths./test1/{test-id}.parameters.3.name');
+    expect(results[3].message).toContain("should not begin with '$' or '@'");
     expect(results[4].path.join('.')).toBe('paths./test1/{test-id}.parameters.4.name');
+    expect(results[4].message).toContain("should not begin with '$' or '@'");
     expect(results[5].path.join('.')).toBe('paths./test1/{test-id}.get.parameters.0.name');
     expect(results[6].path.join('.')).toBe('paths./test1/{test-id}.get.parameters.1.name');
   });
