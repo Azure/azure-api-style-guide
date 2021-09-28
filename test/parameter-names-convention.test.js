@@ -40,7 +40,7 @@ test('az-parameter-names-convention should find errors', () => {
             description: '$ should not be first character of header',
           },
           {
-            name: '@fooBar',
+            name: '@foo-bar',
             in: 'header',
             type: 'string',
             description: '@ should not be first character of header',
