@@ -14,6 +14,14 @@ module.exports = (targetVal, _opts, paths) => {
     return [];
   }
 
+  if (targetVal.name.match(/^[$@]/)) {
+    return [
+      {
+        message: `Parameter name "${targetVal.name}" should not begin with '$' or '@'.`,
+        path: [...path, 'name'],
+      },
+    ];
+  }
   if (['path', 'query'].includes(targetVal.in) && targetVal.name !== 'api-version') {
     if (!targetVal.name.match(/^[a-z][a-z0-9]*([A-Z][a-z0-9]+)*$/)) {
       return [
@@ -33,6 +41,5 @@ module.exports = (targetVal, _opts, paths) => {
       ];
     }
   }
-
   return [];
 };
