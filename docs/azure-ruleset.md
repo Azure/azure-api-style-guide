@@ -66,6 +66,10 @@ All parameters should have a description.
 
 Path and query parameter names should be camel case (except `api-version`); header parameter names should be kebab case.
 
+### az-param-names-unique
+
+All parameter names for an operation -- including parameters defined at the path level -- should be case-insensitive unique.
+
 ### az-patch-content-type
 
 The request body content type for patch operations should be JSON merge patch.
@@ -115,10 +119,6 @@ All success responses except 202 and 204 should define a response body.
 ### az-success-response-nobody
 
 Responses for status codes 202 and 204 should have no response body.
-
-### az-unique-param-names
-
-All parameter names for an operation -- including parameters defined at the path level -- should be case-insensitive unique.
 
 ### az-version-convention
 
