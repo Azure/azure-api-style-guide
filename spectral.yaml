@@ -7,8 +7,8 @@ functions:
   - operation-id
   - pagination-response
   - param-names
+  - param-names-unique
   - patch-content-type
-  - unique-param-names
   - version-policy
 rules:
   info-contact: off
@@ -138,6 +138,15 @@ rules:
     then:
       function: param-names
 
+  az-parameter-names-unique:
+    description: All parameter names for an operation should be case-insensitive unique.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths[*]
+    then:
+      function: param-names-unique
+
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
     description: The request body content type for patch operations should be JSON merge patch.
@@ -251,15 +260,6 @@ rules:
     then:
       field: schema
       function: truthy
-
-  az-unique-parameter-names:
-    description: All parameter names for an operation should be case-insensitive unique.
-    message: '{{error}}'
-    severity: warn
-    formats: ['oas2']
-    given: $.paths[*]
-    then:
-      function: unique-param-names
 
   az-version-convention:
     description: API version should be a date in YYYY-MM-DD format, optionally suffixed with '-preview'.

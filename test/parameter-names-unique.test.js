@@ -3,11 +3,11 @@ const { linterForRule } = require('./utils');
 let linter;
 
 beforeAll(async () => {
-  linter = await linterForRule('az-unique-parameter-names');
+  linter = await linterForRule('az-parameter-names-unique');
   return linter;
 });
 
-test('az-unique-parameter-names should find errors', () => {
+test('az-parameter-names-unique should find errors', () => {
   // Test parameter names in 3 different places:
   // 1. parameter at path level
   // 2. inline parameter at operation level
@@ -75,7 +75,7 @@ test('az-unique-parameter-names should find errors', () => {
   });
 });
 
-test('az-unique-parameter-names should find no errors', () => {
+test('az-parameter-names-unique should find no errors', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
