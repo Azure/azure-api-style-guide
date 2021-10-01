@@ -21,6 +21,9 @@ rules:
   operation-tags: off
   operation-tag-defined: off
 
+  # Note: The Spectral VSCode extension will not display "hint" messages, so
+  # use "info" rather than "hint".
+
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
     message: '{{error}}'
@@ -149,7 +152,7 @@ rules:
   az-path-characters:
     description: Path should contain only recommended characters.
     message: Path contains non-recommended characters.
-    severity: hint
+    severity: info
     formats: ['oas2', 'oas3']
     given: $.paths.*~
     then:
@@ -208,7 +211,7 @@ rules:
   az-request-body-optional:
     description: Flag optional request body -- common oversight.
     message: The body parameter is not marked as required.
-    severity: hint
+    severity: info
     formats: ['oas2']
     given:
     - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')]
@@ -230,7 +233,7 @@ rules:
   az-schema-names-convention:
     description: Schema names should be Pascal case.
     message: Schema name should be Pascal case.
-    severity: hint
+    severity: info
     formats: ['oas2']
     given: $.definitions.*~
     then:
