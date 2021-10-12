@@ -2,6 +2,7 @@ extends: spectral:oas
 functionsDir: './functions'
 functions:
   - consistent-response-body
+  - delete-204-response
   - error-response
   - has-header
   - operation-id
@@ -49,8 +50,7 @@ rules:
     formats: ['oas2','oas3']
     given: $.paths[*].delete.responses
     then:
-      field: '204'
-      function: truthy
+      function: delete-204-response
 
   az-error-response:
     description: Error response body should conform to Microsoft Azure API Guidelines.
