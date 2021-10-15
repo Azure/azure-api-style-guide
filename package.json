@@ -27,6 +27,8 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": ["functions/*.js"]
+    "collectCoverageFrom": [
+      "functions/*.js"
+    ]
   }
 }
