@@ -33,6 +33,10 @@ All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except 
 
 A 202 response should include an Operation-Location response header.
 
+### az-ms-paths
+
+Don't use the Autorest `x-ms-paths` extension except where necessary to support legacy APIs.
+
 ### az-operation-id
 
 The `operationId` should be of the form `Noun_Verb`.  It should contain exactly one underscore.

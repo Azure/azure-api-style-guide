@@ -72,6 +72,14 @@ rules:
       functionOptions:
         name: Operation-location
 
+  az-ms-paths:
+    description: Don't use x-ms-paths except where necessary to support legacy APIs.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.x-ms-paths
+    then:
+      function: falsy
+
   az-operation-id:
     description: OperationId should conform to Azure API Guidelines
     message: '{{error}}'
