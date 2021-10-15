@@ -14,7 +14,8 @@ function isArraySchema(schema) {
 }
 
 function isObjectSchema(schema) {
-  return schema.type === 'object' || !!schema.properties;
+  // When schema contains $ref, that means it is recursive
+  return schema.type === 'object' || !!schema.properties || schema.$ref;
 }
 
 // Validate that the schema conforms to Microsoft API Guidelines

@@ -41,6 +41,15 @@ test('az-delete-204-response should find no errors', () => {
           },
         },
       },
+      '/test202': {
+        delete: {
+          responses: {
+            202: {
+              description: 'Success',
+            },
+          },
+        },
+      },
     },
   };
   return linter.run(myOpenApiDocument).then((results) => {

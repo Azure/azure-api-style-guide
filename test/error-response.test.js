@@ -205,6 +205,9 @@ test('az-error-response should find no errors', () => {
               $ref: '#/definitions/ErrorDetail',
             },
           },
+          innererror: {
+            $ref: '#/definitions/ErrorDetail',
+          },
         },
         required: ['code', 'message'],
       },
