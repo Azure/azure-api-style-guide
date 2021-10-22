@@ -5,6 +5,11 @@ to verify compliance to
 the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and
 the [Azure OpenAPI Style Guidelines](../openapi-style-guide.md).
 
+The Azure ruleset is a _tool_ that helps identify problematic API designs, but the results should not be taken as gospel.
+It may warn you about things that you have conscientiously done.
+Spectral provides an [override mechanism](https://meta.stoplight.io/docs/spectral/ZG9jOjI1MTg5-custom-rulesets#overrides)
+that can be used to disable rules for specific files or file globs and specific JSON paths.
+
 ## Azure Custom Rules
 
 ### az-consistent-response-body
