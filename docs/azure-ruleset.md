@@ -37,6 +37,9 @@ A 202 response should include an Operation-Location response header.
 
 Don't use the Autorest `x-ms-paths` extension except where necessary to support legacy APIs.
 
+`x-ms-paths` is needed to describe non-pure REST APIs that implement multiple operations on a single path and method,
+typically distinguished by a query parameter value, which is not supported by OpenAPI.
+
 ### az-operation-id
 
 The `operationId` should be of the form `Noun_Verb`.  It should contain exactly one underscore.
