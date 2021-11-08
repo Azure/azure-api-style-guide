@@ -10,7 +10,7 @@ an API definition for conformance to the Azure API Guidelines and this Style Gui
 
 ### Install Spectral
 
-`npm install -g @stoplightio/spectral`
+`npm install -g @stoplightio/spectral-cli`
 
 ### Usage
 
