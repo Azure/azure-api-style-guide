@@ -25,6 +25,26 @@ rules:
   # Note: The Spectral VSCode extension will not display "hint" messages, so
   # use "info" rather than "hint".
 
+  az-additional-properties-and-properties:
+    description: Don't specify additionalProperties as a sibling of properties.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $..[?(@.type === 'object' && @.properties)]
+    then:
+      field: additionalProperties
+      function: falsy
+
+  az-additional-properties-object:
+    description: additionalProperties with type object is a common error.
+    severity: info
+    formats: ['oas2', 'oas3']
+    given: $..[?(@.type === 'object')].additionalProperties
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        notMatch: '^object$'
+
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
     message: '{{error}}'

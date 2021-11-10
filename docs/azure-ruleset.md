@@ -12,6 +12,20 @@ that can be used to disable rules for specific files or file globs and specific 
 
 ## Azure Custom Rules
 
+### az-additional-properties-and-properties
+
+Don't specify both `additionalProperties` and `properties` in the same object schema.
+Only use `additionalProperties` to define "map" structures.
+
+### az-additional-properties-object
+
+Specifying `additionalProperties` with `type: object` is usually an error.
+It specifies that the property value must be a JSON object, and not a string or number or array.
+What is probably intended is to allow property values of any type, which is best specified by simply omitting the `type`, e.g.:
+```json
+    "additionalProperties": {}
+```
+
 ### az-consistent-response-body
 
 For a path with a "create" operation (put or patch that returns 201), the 200 response of
