@@ -81,6 +81,20 @@ rules:
     then:
       function: error-response
 
+  az-header-disallowed:
+    description: Authorization, Content-type, and Accept headers should not be defined explicitly.
+    message: 'Header parameter "{{value}}" should not defined explicitly.'
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given:
+    - $.paths[*].parameters.[?(@.in == 'header')]
+    - $.paths[*][get,put,post,patch,delete,options,head].parameters.[?(@.in == 'header')]
+    then:
+      function: pattern
+      field: name
+      functionOptions:
+        match: '^(authorization|content-type|accept)$/i'
+
   az-lro-headers:
     description: A 202 response should include an Operation-Location response header.
     message: A 202 response should include an Operation-Location response header.

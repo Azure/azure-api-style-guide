@@ -48,6 +48,21 @@ Every operation should have a default response with error response body.
 
 All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except for `404` response of HEAD operation.
 
+### az-header-disallowed
+
+The `Authorization`, `Content-type`, and `Accept` headers should not be defined explicitly since their definition is
+implied by other elements of the API definition.
+
+In OpenAPI 2, valid values for `Authorization` should be specified in the `SecurityDefintions` / `Security` objects,
+values of `Content-type` are specified by `consumes`, and values of `Accept` are specified by `produces`.
+
+In OpenAPI 3, valid values for `Authorization` should be specified in the `SecuritySchemes` / `Security` objects,
+values of `Content-type` are specified by the keys of the `content` object in `requestBody`, and values of `Accept`
+are specified by union of the keys of the `content` objects of all elements of the `responses` object.
+
+The [OpenAPI 3 specification](https://github.com/OAI/OpenAPI-Specification/blob/3.0.3/versions/3.0.3.md#fixed-fields-10)
+explicitly states that these header definitions should be ignored.
+
 ### az-lro-headers
 
 A 202 response should include an Operation-Location response header.
