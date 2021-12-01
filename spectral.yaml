@@ -100,6 +100,15 @@ rules:
     then:
       function: falsy
 
+  az-nullable:
+    description: Avoid the use of x-nullable.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    resolved: false
+    given: $..x-nullable
+    then:
+      function: undefined
+
   az-operation-id:
     description: OperationId should conform to Azure API Guidelines
     message: '{{error}}'
