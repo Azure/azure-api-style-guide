@@ -81,6 +81,14 @@ rules:
     then:
       function: error-response
 
+  az-formdata:
+    description: Check for appropriate use of formData parameters.
+    severity: info
+    formats: ['oas2']
+    given: $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.in == "formData")]
+    then:
+      function: falsy
+
   az-header-disallowed:
     description: Authorization, Content-type, and Accept headers should not be defined explicitly.
     message: 'Header parameter "{{value}}" should not defined explicitly.'

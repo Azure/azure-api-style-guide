@@ -48,6 +48,14 @@ Every operation should have a default response with error response body.
 
 All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except for `404` response of HEAD operation.
 
+### az-formdata
+
+Check for appropriate use of formData parameters.
+
+It can be appropriate to use formData parameters when sending multiple file-type parameters or an array of file-type parameters.
+But it is unnecessary and overly complicated to use formData to send a single file-type parameter.
+This should be defined as a `body` parameter with `type: string, format: binary` and use content-type `application/octet-stream`.
+
 ### az-header-disallowed
 
 The `Authorization`, `Content-type`, and `Accept` headers should not be defined explicitly since their definition is
