@@ -74,6 +74,15 @@ Don't use the Autorest `x-ms-paths` extension except where necessary to support 
 `x-ms-paths` is needed to describe non-pure REST APIs that implement multiple operations on a single path and method,
 typically distinguished by a query parameter value, which is not supported by OpenAPI.
 
+### az-nullable
+
+Avoid the use of the autorest extension `x-nullable`.
+
+There is no need to specify `x-nullable: false`. This extension only has effect when its value is true.
+
+Specifying `x-nullable: true` signifies that the value "null" has a different semantic meaning that the property not being present.
+This is problematic for some high-level languages and should be avoided unless there is strong justification for doing so.
+
 ### az-operation-id
 
 The `operationId` should be of the form `Noun_Verb`.  It should contain exactly one underscore.
