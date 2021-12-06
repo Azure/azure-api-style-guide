@@ -38,12 +38,9 @@ rules:
     description: additionalProperties with type object is a common error.
     severity: info
     formats: ['oas2', 'oas3']
-    given: $..[?(@.type === 'object')].additionalProperties
+    given: $.[?(@property == 'additionalProperties' && @.type == 'object' && @.properties == undefined)]
     then:
-      field: type
-      function: pattern
-      functionOptions:
-        notMatch: '^object$'
+      function: falsy
 
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
