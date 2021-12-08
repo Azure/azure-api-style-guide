@@ -53,8 +53,8 @@ All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except 
 Check for appropriate use of formData parameters.
 
 It can be appropriate to use formData parameters when sending multiple file-type parameters or an array of file-type parameters.
-But it is unnecessary and overly complicated to use formData to send a single file-type parameter.
-This should be defined as a `body` parameter with `type: string, format: binary` and use content-type `application/octet-stream`.
+But it is usually unnecessary and can be overly complicated to use formData when all you are doing is sending a single file-type parameter.
+Instead, consider defining a `body` parameter with `type: string, format: binary` and use content-type `application/octet-stream`.
 
 ### az-header-disallowed
 

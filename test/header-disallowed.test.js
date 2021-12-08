@@ -64,6 +64,11 @@ test('az-header-disallowed should find no errors', () => {
             in: 'query',
             type: 'string',
           },
+          {
+            name: 'Content-Encoding',
+            in: 'header',
+            type: 'string',
+          },
         ],
         get: {
           parameters: [
@@ -72,8 +77,23 @@ test('az-header-disallowed should find no errors', () => {
               in: 'query',
               type: 'string',
             },
+            {
+              name: 'Accept-Language',
+              in: 'header',
+              type: 'string',
+            },
+            {
+              $ref: '#/parameters/RequestIdParam'
+            }
           ],
         },
+      },
+    },
+    parameters: {
+      RequestIdParam: {
+        name: 'x-ms-request-id',
+        in: 'header',
+        type: 'string',
       },
     },
   };
