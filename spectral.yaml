@@ -38,7 +38,7 @@ rules:
     description: additionalProperties with type object is a common error.
     severity: info
     formats: ['oas2', 'oas3']
-    given: $.[?(@property == 'additionalProperties' && @.type == 'object' && @.properties == undefined)]
+    given: $..[?(@property == 'additionalProperties' && @.type == 'object' && @.properties == undefined)]
     then:
       function: falsy
 
