@@ -29,7 +29,7 @@ rules:
     description: Don't specify additionalProperties as a sibling of properties.
     severity: warn
     formats: ['oas2', 'oas3']
-    given: $..[?(@.type === 'object' && @.properties)]
+    given: $..[?(@object() && @.type === 'object' && @.properties)]
     then:
       field: additionalProperties
       function: falsy
