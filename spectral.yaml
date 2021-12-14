@@ -306,6 +306,18 @@ rules:
       functionOptions:
         type: pascal
 
+  az-security-definition-description:
+    description: A security definition should have a description.
+    message: Security definition should have a description.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: 
+    - $.securityDefinitions[*]
+    - $.components.securitySchemes[*]
+    then:
+      field: description
+      function: truthy
+
   # All success responses except 202 & 204 should define a response body
   # ref: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#1321-put
   az-success-response-body:

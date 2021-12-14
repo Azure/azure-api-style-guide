@@ -170,6 +170,10 @@ All schemas should have a description or title.
 
 Schema names should be Pascal case.
 
+### az-security-definition-description
+
+Security definition / security scheme should have a description.
+
 ### az-success-response-body
 
 All success responses except 202 and 204 should define a response body.
