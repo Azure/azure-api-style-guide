@@ -83,8 +83,8 @@ test('az-header-disallowed should find no errors', () => {
               type: 'string',
             },
             {
-              $ref: '#/parameters/RequestIdParam'
-            }
+              $ref: '#/parameters/RequestIdParam',
+            },
           ],
         },
       },
