@@ -122,7 +122,7 @@ All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except 
 Every error response should include the `x-ms-error-code` response header in the `headers` of the response.
 
 Example:
-```
+```json
       "400": {
         "description": "Bad Request",
         "headers": {
@@ -143,7 +143,7 @@ Example:
 A 202 response should include the `Operation-Location` response header in the `headers` of the response.
 
 Example:
-```
+```json
     "responses": {
       "202": {
         "description": "The service has accepted the request and will start processing later.",
