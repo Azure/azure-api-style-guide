@@ -46,7 +46,7 @@ test('az-additional-properties-object should find no errors', () => {
         description: 'This',
         type: 'object',
         additionalProperties: {
-          type: 'string',
+          type: 'object',
           properties: {
             prop1: {
               type: 'string',
@@ -62,6 +62,26 @@ test('az-additional-properties-object should find no errors', () => {
             additionalProperties: {
               type: 'string',
             },
+          },
+        },
+      },
+      ThaOther: {
+        description: 'ThaOther',
+        type: 'object',
+        properties: {
+          otherMap: {
+            additionalProperties: {
+              $ref: '#/definitions/Other',
+            },
+          },
+        },
+      },
+      Other: {
+        description: 'Other object',
+        type: 'object',
+        properties: {
+          aProp: {
+            type: 'string',
           },
         },
       },
