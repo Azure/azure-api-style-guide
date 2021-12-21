@@ -29,6 +29,11 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "functions/*.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "./functions/*.js": {
+        "statements": 80
+      }
+    }
   }
 }
