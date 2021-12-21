@@ -52,19 +52,12 @@ function findVersionParam(params) {
 
 // Verify version parameter has certain characteristics:
 // - it is required
-// - if it has a default value, it has the form YYYY-MM-DD
 function validateVersionParam(param, path) {
   const errors = [];
   if (!param.required) {
     errors.push({
       message: '"api-version" should be a required parameter',
       path,
-    });
-  }
-  if (param.default && !param.default.match(/^\d\d\d\d-\d\d-\d\d(-preview)?$/)) {
-    errors.push({
-      message: 'Default value for "api-version" should be a date in YYYY-MM-DD format, optionally suffixed with \'-preview\'.',
-      path: [...path, 'default'],
     });
   }
   return errors;
