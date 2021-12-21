@@ -1,7 +1,7 @@
 # Azure API Style Guide
 
 This repository contains a [Style Guide for OpenAPI definitions](./openapi-style-guide.md) of Azure services.
-The Style Guide is a companion to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md) and the [OpenAPI 3.1 specification](https://spec.openapis.org/oas/v3.1.0).
+The Style Guide is a companion to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md), the [OpenAPI 2.0 specification](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/2.0.md), and the [OpenAPI 3.1 specification](https://spec.openapis.org/oas/v3.1.0).
 
 The repository also contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check 
 an API definition for conformance to the Azure API Guidelines and this Style Guide. 
