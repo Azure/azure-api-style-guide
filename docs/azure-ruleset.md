@@ -124,9 +124,13 @@ All parameters should have a description.
 
 Path and query parameter names should be camel case (except `api-version`); header parameter names should be kebab case.
 
-### az-param-names-unique
+### az-parameter-names-unique
 
 All parameter names for an operation -- including parameters defined at the path level -- should be case-insensitive unique.
+
+### az-parameter-order
+
+Path parameters must be in the same order as in the path.
 
 ### az-patch-content-type
 

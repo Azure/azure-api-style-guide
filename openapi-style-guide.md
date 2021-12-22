@@ -164,6 +164,10 @@ Example:
 
 All parameter names for an operation -- including parameters defined at the path level -- should be case-insensitive unique.
 
+### Parameter order
+
+Path parameters should be in the same order as they appear in the path.
+
 ### Descriptions
 
 Every parameter should have a description.

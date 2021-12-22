@@ -9,6 +9,7 @@ functions:
   - pagination-response
   - param-names
   - param-names-unique
+  - param-order
   - patch-content-type
   - version-policy
 rules:
@@ -204,6 +205,15 @@ rules:
     given: $.paths[*]
     then:
       function: param-names-unique
+
+  az-parameter-order:
+    description: Path parameters must be in the same order as in the path.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths
+    then:
+      function: param-order
 
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
