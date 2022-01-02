@@ -8,6 +8,10 @@ an API definition for conformance to the Azure API Guidelines and this Style Gui
 
 ## How to use the Spectral Ruleset
 
+### Dependencies
+
+The Spectral Ruleset requires Node version 14 or later.
+
 ### Install Spectral
 
 `npm install -g @stoplightio/spectral-cli`
