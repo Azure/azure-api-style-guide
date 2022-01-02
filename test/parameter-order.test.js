@@ -62,8 +62,8 @@ test('az-parameter-order should find errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(2);
-    expect(results[0].path.join('.')).toBe('paths./test1/{p1}/foo/{p2}.parameters.0');
-    expect(results[1].path.join('.')).toBe('paths./test2/{p1}/foo/{p2}/bar/{p3}.get.parameters.0');
+    expect(results[0].path.join('.')).toBe('paths./test1/{p1}/foo/{p2}.parameters');
+    expect(results[1].path.join('.')).toBe('paths./test2/{p1}/foo/{p2}/bar/{p3}.get.parameters');
   });
 });
 
@@ -191,8 +191,8 @@ test('az-parameter-order should find oas3 errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(2);
-    expect(results[0].path.join('.')).toBe('paths./test1/{p1}/foo/{p2}.parameters.0');
-    expect(results[1].path.join('.')).toBe('paths./test2/{p1}/foo/{p2}/bar/{p3}.get.parameters.0');
+    expect(results[0].path.join('.')).toBe('paths./test1/{p1}/foo/{p2}.parameters');
+    expect(results[1].path.join('.')).toBe('paths./test2/{p1}/foo/{p2}/bar/{p3}.get.parameters');
   });
 });
 
