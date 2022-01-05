@@ -71,6 +71,10 @@ are specified by union of the keys of the `content` objects of all elements of t
 The [OpenAPI 3 specification](https://github.com/OAI/OpenAPI-Specification/blob/3.0.3/versions/3.0.3.md#fixed-fields-10)
 explicitly states that these header definitions should be ignored.
 
+### az-lro-extension
+
+Operations with a 202 response should specify `x-ms-long-running-operation: true`.
+
 ### az-lro-headers
 
 A 202 response should include an Operation-Location response header.

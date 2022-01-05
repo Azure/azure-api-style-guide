@@ -15,7 +15,7 @@
 | [NonApplicationJsonType][r2004] | R2004 | |
 | [LongRunningResponseStatusCode][r2005] | R2005 | Add |
 | [ControlCharactersNotAllowed][r2006] | R2006 |  |
-| [LongRunningOperationsWithLongRunningExtension][r2007] | R2007 | Add |
+| [LongRunningOperationsWithLongRunningExtension][r2007] | R2007 | [az-lro-extension](./azure-ruleset.md#az-lro-extension) |
 | [MutabilityWithReadOnlyRule][r2008] | R2008 |  |
 | [ArraySchemaMustHaveItems][r2009] | R2009 | Add |
 | [LongRunningOperationsOptionsValidator][r2010] | R2010 | Add ? |

@@ -113,6 +113,11 @@ To support pagination:
 - If the operation has a `top` parameter, it must be an integer, optional, and have a documented default and maximum value
 - If the operation has a `maxpagesize` parameter, it must be an integer, optional, and have a documented default and maximum value
 
+### Long-running operations
+
+All long-running operations should specify the autorest extension `x-ms-long-running-operation: true`.
+This informs the client library generators to include support for checking operation completion.
+
 ### Error response
 
 All operations should have a "default" (error) response with a response body that conforms to the Azure API Guidelines.
