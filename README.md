@@ -6,6 +6,10 @@ The Style Guide is a companion to the [Azure API Guidelines](https://github.com/
 The repository also contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check 
 an API definition for conformance to the Azure API Guidelines and this Style Guide. 
 
+> **NOTE:** It is highly recommended that you leverage the Spectral rule set. Azure service teams have found Spectral to be very useful identifying many common mistakes that affect the overall quality of their Open API documentation. It's one of the first things the API Stewardship Board turns to when revieing an API specification. 
+> 
+> However, the errors, warnings, and info messages identified by Spectral should be evaluated in the context of *your service*, and using *your judgement*. If you have any questions, concerns, or comments, please don't hesitate to start a discussion in the [API Stewardship Teams Channel](https://teams.microsoft.com/l/channel/19%3a3ebb18fded0e47938f998e196a52952f%40thread.tacv2/General?groupId=1a10b50c-e870-4fe0-8483-bf5542a8d2d8&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+
 ## How to use the Spectral Ruleset
 
 ### Dependencies
