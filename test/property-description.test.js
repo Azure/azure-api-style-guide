@@ -13,7 +13,7 @@ beforeAll(async () => {
 // - top-level schema in definitions
 // - inner schema in definitions
 
-test.skip('az-property-description should find errors', () => {
+test('az-property-description should find errors', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
@@ -104,7 +104,7 @@ test.skip('az-property-description should find errors', () => {
   });
 });
 
-test.skip('az-property-description should find no errors', () => {
+test('az-property-description should find no errors', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {

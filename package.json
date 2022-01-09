@@ -15,9 +15,9 @@
     "url": "https://github.com/Azure/azure-api-style-guide"
   },
   "devDependencies": {
-    "@stoplight/spectral-core": "1.4.0",
-    "@stoplight/spectral-ruleset-migrator": "^1.4.2",
-    "@stoplight/spectral-rulesets": "^1.2.4",
+    "@stoplight/spectral-core": "1.8.1",
+    "@stoplight/spectral-ruleset-migrator": "^1.7.1",
+    "@stoplight/spectral-rulesets": "^1.3.1",
     "ajv": "^8.6.2",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -34,6 +34,11 @@
       "./functions/*.js": {
         "statements": 80
       }
+    },
+    "moduleNameMapper": {
+      "^nimma/legacy$": "<rootDir>/node_modules/nimma/dist/legacy/cjs/index.js",
+      "^nimma/(.*)": "<rootDir>/node_modules/nimma/dist/cjs/$1",
+      "^@stoplight/spectral-ruleset-bundler/(.*)$": "<rootDir>/node_modules/@stoplight/spectral-ruleset-bundler/dist/$1"
     }
   }
 }
