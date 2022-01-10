@@ -103,6 +103,16 @@ rules:
       functionOptions:
         notMatch: '/^(authorization|content-type|accept)$/i'
 
+  az-lro-extension:
+    description: "Operations with a 202 response should specify `x-ms-long-running-operation: true`."
+    message: "Operations with a 202 response should specify `x-ms-long-running-operation: true`."
+    severity: warn
+    formats: ['oas2']
+    given: $.paths[*][*].responses[?(@property == '202')]^^
+    then:
+      field: x-ms-long-running-operation
+      function: truthy
+
   az-lro-headers:
     description: A 202 response should include an Operation-Location response header.
     message: A 202 response should include an Operation-Location response header.
