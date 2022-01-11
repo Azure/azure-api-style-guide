@@ -146,6 +146,11 @@ Only patch operations should accept JSON merge patch.
 
 Service-defined path segments should be restricted to 0-9 A-Z a-z - . _ ~, with : allowed only as described below to designate an action operation.
 
+### az-path-parameter-schema
+
+Path parameters should be defined as `type: string` with a `maxLength` and a `pattern` that restricts
+the characters that can be be used in the parameter value.
+
 ### az-post-201-response
 
 Using post for a create operation is discouraged.  Use put or patch instead.

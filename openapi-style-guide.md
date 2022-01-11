@@ -185,6 +185,11 @@ Format must be one of the values [defined by OpenAPI][openapi-data-types] or rec
 
 Required parameters should not specify a default value.
 
+### Path parameters
+
+Path parameters should be defined as `type: string` with a `maxLength` and a `pattern` that restricts
+the characters that can be be used in the parameter value.
+
 <!-- --------------------------------------------------------------- -->
 
 ## Schemas
