@@ -18,7 +18,7 @@ The Spectral Ruleset requires Node version 14 or later.
 
 ### Install Spectral
 
-`npm install -g @stoplight/spectral-cli`
+`npm i @stoplight/spectral-cli -g`
 
 ### Usage
 
