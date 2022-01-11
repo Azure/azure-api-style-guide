@@ -12,6 +12,7 @@ functions:
   - param-order
   - patch-content-type
   - path-param-schema
+  - path-param-names
   - version-policy
 rules:
   info-contact: off
@@ -225,6 +226,15 @@ rules:
     given: $.paths
     then:
       function: param-order
+
+  az-path-parameter-names:
+    description: Path parameter names should be consistent across all paths.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths
+    then:
+      function: path-param-names
 
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
