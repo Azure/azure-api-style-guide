@@ -24,7 +24,7 @@ test('az-path-parameter-schema should find errors', () => {
           },
         ],
       },
-      '/bar/{p2}/baz/{p3}': {
+      '/bar/{p2}/baz/{p3}/foo/{p4}': {
         get: {
           parameters: [
             {
@@ -35,6 +35,12 @@ test('az-path-parameter-schema should find errors', () => {
               in: 'path',
               type: 'string',
               maxLength: 50,
+            },
+            {
+              name: 'p4',
+              in: 'path',
+              type: 'string',
+              maxLength: 2083,
             },
           ],
         },
@@ -49,16 +55,18 @@ test('az-path-parameter-schema should find errors', () => {
     },
   };
   return linter.run(oasDoc).then((results) => {
-    expect(results.length).toBe(4);
+    expect(results.length).toBe(5);
     expect(results[0].path.join('.')).toBe('paths./foo/{p1}.parameters.0');
     expect(results[0].message).toContain('should specify a maximum length');
     expect(results[0].message).toContain('and characters allowed');
     expect(results[1].path.join('.')).toBe('paths./foo/{p1}.parameters.0.type');
     expect(results[1].message).toContain('should be defined as type: string');
-    expect(results[2].path.join('.')).toBe('paths./bar/{p2}/baz/{p3}.get.parameters.0');
+    expect(results[2].path.join('.')).toBe('paths./bar/{p2}/baz/{p3}/foo/{p4}.get.parameters.0');
     expect(results[2].message).toContain('should specify a maximum length');
-    expect(results[3].path.join('.')).toBe('paths./bar/{p2}/baz/{p3}.get.parameters.1');
+    expect(results[3].path.join('.')).toBe('paths./bar/{p2}/baz/{p3}/foo/{p4}.get.parameters.1');
     expect(results[3].message).toContain('should specify characters allowed');
+    expect(results[4].path.join('.')).toBe('paths./bar/{p2}/baz/{p3}/foo/{p4}.get.parameters.2');
+    expect(results[4].message).toContain('should be less than');
   });
 });
 

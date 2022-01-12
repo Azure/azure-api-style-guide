@@ -1,3 +1,5 @@
+const URL_MAX_LENGTH = 2083;
+
 // `given` is a (resolved) parameter entry at the path or operation level
 module.exports = (param, _opts, paths) => {
   if (param === null || typeof param !== 'object') {
@@ -36,6 +38,11 @@ module.exports = (param, _opts, paths) => {
   } else if (!schema.maxLength) {
     errors.push({
       message: 'Path parameter should specify a maximum length (maxLength).',
+      path,
+    });
+  } else if (schema.maxLength && schema.maxLength >= URL_MAX_LENGTH) {
+    errors.push({
+      message: `Path parameter maximum length should be less than ${URL_MAX_LENGTH}`,
       path,
     });
   } else if (!schema.pattern) {
