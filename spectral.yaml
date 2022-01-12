@@ -11,6 +11,7 @@ functions:
   - param-names-unique
   - param-order
   - patch-content-type
+  - path-param-schema
   - version-policy
 rules:
   info-contact: off
@@ -248,6 +249,17 @@ rules:
         # Check each path segment individually and ignore param segments
         # Note: the ':' is only allowed in the final path segment
         match: '^(/([0-9A-Za-z._~-]+|{[^}]+}))*(/([0-9A-Za-z._~:-]+|{[^}]*}(:[0-9A-Za-z._~-]+)?))$'
+
+  az-path-parameter-schema:
+    description: 'Path parameter should be type: string and specify maxLength and pattern.'
+    message: '{{error}}'
+    severity: info
+    formats: ['oas2', 'oas3']
+    given:
+    - $.paths[*].parameters[?(@.in == 'path')]
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters[?(@.in == 'path')]
+    then:
+      function: path-param-schema
 
   az-post-201-response:
     description: Using post for a create operation is discouraged.
