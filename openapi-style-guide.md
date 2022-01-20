@@ -123,6 +123,7 @@ This informs the client library generators to include support for checking opera
 All operations should have a "default" (error) response with a response body that conforms to the Azure API Guidelines.
 
 All `4xx` and `5xx` responses should specify `x-ms-error-response: true` except for `404` response of HEAD operation.
+You do not need to specify `x-ms-error-response: true` on the "default" response.
 
 Every error response should include the `x-ms-error-code` response header in the `headers` of the response.
 

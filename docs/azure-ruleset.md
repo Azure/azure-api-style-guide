@@ -163,6 +163,11 @@ All schema properties should have a description.
 
 Property names should be lowerCamelCase.
 
+### az-put-path
+
+The path for a put operation should have a path parameter as the final path segment.
+This path parameter is the identifier of the resource to create or update.
+
 ### az-request-body-not-allowed
 
 A get or delete operation must not accept a request body/body parameter.

@@ -295,6 +295,17 @@ rules:
       functionOptions:
         type: camel
 
+  az-put-path:
+    description: The path for a put should have a final path parameter.
+    message: The path for a put should have a final path parameter.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths[*].put^~
+    then:
+      function: pattern
+      functionOptions:
+        match: '/\}$/'
+
   az-request-body-not-allowed:
     description: A get or delete operation must not accept a body parameter.
     severity: error
