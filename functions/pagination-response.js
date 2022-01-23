@@ -32,7 +32,7 @@ module.exports = (operation, _opts, paths) => {
 
   if (operation['x-ms-pageable']) {
     // Check value property
-    if ('value' in responseSchema.properties) {
+    if (responseSchema.properties && 'value' in responseSchema.properties) {
       if (responseSchema.properties.value.type !== 'array') {
         errors.push({
           message: '`value` property in pageable response should be type: array',
@@ -45,7 +45,7 @@ module.exports = (operation, _opts, paths) => {
           path: [...path, 'responses', resp, 'schema', 'required'],
         });
       }
-    } else {
+    } else if (!responseSchema.allOf) { // skip error for missing value -- it might be in allOf
       errors.push({
         message: 'Response body schema of pageable response should contain top-level array property `value`',
         path: [...path, 'responses', resp, 'schema', 'properties'],
@@ -53,7 +53,7 @@ module.exports = (operation, _opts, paths) => {
     }
     // Check nextLink property
     const nextLinkName = operation['x-ms-pageable'].nextLinkName || 'nextLink';
-    if (nextLinkName in responseSchema.properties) {
+    if (responseSchema.properties && nextLinkName in responseSchema.properties) {
       if (responseSchema.properties[nextLinkName].type !== 'string') {
         errors.push({
           message: `\`${nextLinkName}\` property in pageable response should be type: string`,
@@ -66,7 +66,7 @@ module.exports = (operation, _opts, paths) => {
           path: [...path, 'responses', resp, 'schema', 'required'],
         });
       }
-    } else {
+    } else if (!responseSchema.allOf) { // skip error for missing nextLink -- it might be in allOf
       errors.push({
         message: `Response body schema of pageable response should contain top-level property \`${nextLinkName}\``,
         path: [...path, 'responses', resp, 'schema', 'properties'],
