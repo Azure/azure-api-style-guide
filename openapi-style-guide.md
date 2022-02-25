@@ -209,7 +209,9 @@ Every schema should have a description or a title.
 
 Every schema property should have a description.
 
-### Format
+### Type and format
+
+Every schema should specify an explicit type (some exceptions allowed for "any" type).
 
 Format must be one of the values [defined by OpenAPI][openapi-data-types] or recognized by the Azure tooling.
 
