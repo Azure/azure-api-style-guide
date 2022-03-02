@@ -26,6 +26,13 @@ What is probably intended is to allow property values of any type, which is best
     "additionalProperties": {}
 ```
 
+### az-api-version-enum
+
+The api-version parameter should not be an enum. This rule is primarily to discourage a practice observed in some APIs
+of defining api-version as an enum with a single value -- the most current API version.
+This requires removing the old API version when a new version is defined,
+which is disallowed by the breaking changes policy.
+
 ### az-consistent-response-body
 
 For a path with a "create" operation (put or patch that returns 201), the 200 response of

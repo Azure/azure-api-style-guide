@@ -47,6 +47,17 @@ rules:
     then:
       function: falsy
 
+  az-api-version-enum:
+    description: The api-version parameter should not be an enum.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given:
+    - $.paths[*].parameters.[?(@.name == 'api-version')]
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.name == 'api-version')]
+    then:
+      field: enum
+      function: falsy
+
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
     message: '{{error}}'
