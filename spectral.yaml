@@ -189,6 +189,16 @@ rules:
     then:
       function: pagination-response
 
+  az-pageable-post:
+    description: Post operations that specify x-ms-pageable are problematic.
+    severity: info
+    formats: ['oas2', 'oas3']
+    given:
+    - $.paths.*[post]
+    then:
+      field: x-ms-pageable
+      function: falsy
+
   az-parameter-default-not-allowed:
     description: A required parameter should not specify a default value.
     severity: warn

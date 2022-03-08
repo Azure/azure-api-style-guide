@@ -119,6 +119,11 @@ The `Verb` of the `operationId` should be or contain a specific value depending 
 
 Operation should have a summary or description.
 
+### az-pageable-post
+
+Post operations that specify x-ms-pageable are problematic because it is unclear what http method
+should be used with the `nextLink` URL.
+
 ### az-pagination-response
 
 If the operation returns a list that is potentially large, it should [support pagination](../opeapi-style-guidelines.md#support-for-pagination).
