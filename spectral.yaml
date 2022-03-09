@@ -146,6 +146,15 @@ rules:
       field: schema
       function: falsy
 
+  az-ms-client-flatten:
+    description: The use of x-ms-client-flatten extension is discouraged.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    resolved: false
+    given: $..x-ms-client-flatten
+    then:
+      function: undefined
+
   az-ms-paths:
     description: Don't use x-ms-paths except where necessary to support legacy APIs.
     severity: warn
