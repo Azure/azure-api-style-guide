@@ -109,9 +109,13 @@ To support pagination:
 - The operation should have the `x-ms-pageable` annotation
 - The operation response should contain a top-level `value` property of type array and required
 - The operation response should contain a top-level `nextLink` property of type string and optional
-- If the operation has a `skip` parameter, it must be an integer and optional
-- If the operation has a `top` parameter, it must be an integer, optional, and have a documented default and maximum value
-- If the operation has a `maxpagesize` parameter, it must be an integer, optional, and have a documented default and maximum value
+- If present, the `top` parameter must be an integer, optional, with no default value
+- If present, the `skip` parameter must be an integer, optional, with a default value of 0
+- If present, the `maxpagesize` parameter must be an integer, optional, with no default value
+- If present, the `filter` parameter must be a string and optional
+- If present, the `orderby` parameter should be be an array of strings and optional
+- If present, the `select` parameter should be be an array of strings and optional
+- If present, the `expand` parameter should be be an array of strings and optional
 
 ### Long-running operations
 

@@ -128,6 +128,10 @@ Operation should have a summary or description.
 Post operations that specify x-ms-pageable are problematic because it is unclear what http method
 should be used with the `nextLink` URL.
 
+### az-pagination-parameters
+
+The `top`, `skip`, `maxpagesize`, `filter`, `orderby`, `select`, and `expand` parameters, if present, must follow Azure conventions.
+
 ### az-pagination-response
 
 If the operation returns a list that is potentially large, it should [support pagination](../opeapi-style-guidelines.md#support-for-pagination).
@@ -223,6 +227,10 @@ All success responses except 202 and 204 should define a response body.
 ### az-success-response-nobody
 
 Responses for status codes 202 and 204 should have no response body.
+
+### az-top-default-not-allowed
+
+The `top` query parameter should not have a default value. The service should return all results when `top` is not specified.
 
 ### az-version-convention
 

@@ -6,6 +6,7 @@ functions:
   - error-response
   - has-header
   - operation-id
+  - pagination-parameters
   - pagination-response
   - param-names
   - param-names-unique
@@ -196,6 +197,16 @@ rules:
     - $.paths[*][?( @property === 'trace' && !@.summary && !@.description )]
     then:
       function: falsy
+
+  az-pagination-parameters:
+    description: Pagination parameters must conform to Azure guidelines.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths.*[get,post]
+    then:
+      function: pagination-parameters
 
   az-pagination-response:
     description: An operation that returns a list that is potentially large should support pagination.
