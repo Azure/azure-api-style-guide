@@ -86,6 +86,10 @@ Operations with a 202 response should specify `x-ms-long-running-operation: true
 
 A 202 response should include an Operation-Location response header.
 
+### az-ms-client-flatten
+
+The use of the autorest `x-ms-client-flatten` extension is discouraged.
+
 ### az-ms-paths
 
 Don't use the Autorest `x-ms-paths` extension except where necessary to support legacy APIs.
