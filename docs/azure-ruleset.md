@@ -220,3 +220,7 @@ API version (`info.version`) should be a date in YYYY-MM-DD format, optionally s
 API version should not be specified in path segment, and all operations should accept `api-version` query param with date value in YYYY-MM-DD format, optionally suffixed with '-preview'.
 
 [RFC7231]: https://tools.ietf.org/html/rfc7231
+
+### az-204-no-response-body
+
+A 204 (No Content) response should have no response body.
