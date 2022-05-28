@@ -196,6 +196,10 @@ RFC7231 states that the payload for both get and delete "has no defined semantic
 
 Flag a body parameter/request body that is not marked as required. This is a common oversight.
 
+### az-response-body-type
+
+Response body schema must not be a bare array.
+
 ### az-schema-description-or-title
 
 All schemas should have a description or title.
