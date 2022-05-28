@@ -388,6 +388,17 @@ rules:
       field: required
       function: truthy
 
+  az-response-body-type:
+    description: Response body schema must not be a bare array.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths[*][*][responses][*].schema
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        notMatch: '/^array$/'
+
   az-schema-description-or-title:
     description: All schemas should have a description or title.
     message: Schema should have a description or title.
