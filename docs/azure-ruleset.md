@@ -119,6 +119,10 @@ The `Verb` of the `operationId` should be or contain a specific value depending 
 | patch            | "Update"            | could be "CreateOrUpdate" |
 | delete           | "Delete"            | |
 
+### az-operation-security
+
+Every operation should have a security requirement (may be defined globally).
+
 ### az-operation-summary-or-description
 
 Operation should have a summary or description.

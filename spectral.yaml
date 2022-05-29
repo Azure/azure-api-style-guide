@@ -7,6 +7,7 @@ functions:
   - has-header
   - operation-id
   - pagination-parameters
+  - operation-security
   - pagination-response
   - param-names
   - param-names-unique
@@ -183,6 +184,15 @@ rules:
     then:
       function: operation-id
   
+  az-operation-security:
+    description: Operation should have a security requirement or globally.
+    message: Operation should have a security requirement.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths.*[get,put,post,patch,delete,options,head]
+    then:
+      function: operation-security
+
   az-operation-summary-or-description:
     description: Operation should have a summary or description.
     message: Operation should have a summary or description.
