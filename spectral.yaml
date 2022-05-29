@@ -13,6 +13,7 @@ functions:
   - patch-content-type
   - path-param-schema
   - path-param-names
+  - security-definitions
   - version-policy
 rules:
   info-contact: off
@@ -432,6 +433,15 @@ rules:
     then:
       field: description
       function: truthy
+
+  az-security-definitions:
+    description: Security definitions must follow Azure conventions.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2']
+    given: $
+    then:
+      function: security-definitions
 
   # All success responses except 202 & 204 should define a response body
   # ref: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#1321-put

@@ -215,6 +215,28 @@ Every schema should specify an explicit type (some exceptions allowed for "any" 
 
 Format must be one of the values [defined by OpenAPI][openapi-data-types] or recognized by the Azure tooling.
 
+<!-- --------------------------------------------------------------- -->
+
+## Security
+
+### Security Definitions
+
+Every API definition must have a `securityDefinitions` section with at least one valid security scheme.
+
+Each security scheme must have a `type` of "oauth2" or "apiKey" with `in` "header".
+
+Each security scheme must have a `description` with a plain English explanation of the security scheme.
+
+For "oauth2" security schemes, `scopes` must contain at least one entry.
+
+The key of each entry in `scopes` must be of the form "<resource URI>/scope name", where "scope name" is typically ".default" for Azure services.
+
+### Security Requirements
+
+Every operation must have a `security`, or there must be a global `security`, with at least one entry.
+
+Every entry of a global or operation `security` must reference a security scheme in the `securityDefinitions`.
+
 <!-- Links -->
 
 [openapi-data-types]: https://github.com/OAI/OpenAPI-Specification/blob/main/versions/2.0.md#data-types
