@@ -23,7 +23,6 @@ rules:
   no-$ref-siblings: off
   oas2-api-host: off
   oas2-api-schemes: off
-  oas2-unused-definition: off
   openapi-tags: off
   operation-description: off
   operation-tags: off
