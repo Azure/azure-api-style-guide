@@ -233,6 +233,17 @@ An oauth2 security scheme must define at least one scope, and all scopes must ha
 
 Security definition / security scheme should have a description.
 
+### az-security-min-length
+
+A `security` property should contain at least one security requirement.
+
+### az-security-requirement
+
+Each property in a security requirement object must reference a defined security scheme.
+
+The value of property in a security requirement that references an oauth2 security scheme must be a non-empty
+array of scope names, each of which must also be defined in the referenced security scheme.
+
 ### az-success-response-body
 
 All success responses except 202 and 204 should define a response body.

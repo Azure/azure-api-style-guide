@@ -16,6 +16,7 @@ functions:
   - path-param-schema
   - path-param-names
   - security-definitions
+  - security-requirements
   - version-policy
 rules:
   info-contact: off
@@ -463,6 +464,29 @@ rules:
     given: $
     then:
       function: security-definitions
+
+  az-security-requirements:
+    description: The security requirement should reference a defined security scheme.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2','oas3']
+    given:
+    - $.security
+    - $.paths.*[get,put,post,patch,delete,options,head].security
+    then:
+      function: security-requirements
+
+  az-security-min-length:
+    description: Security property should specify at least one security requirement.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given:
+    - $.security
+    - $.paths.*[get,put,post,patch,delete,options,head].security
+    then:
+      function: length
+      functionOptions:
+        min: 1
 
   # All success responses except 202 & 204 should define a response body
   # ref: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#1321-put
