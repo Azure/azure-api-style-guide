@@ -13,7 +13,7 @@ module.exports = (paths) => {
 
   // Dict to accumulate the parameter name associated with a path segment
   const paramNameForSegment = {};
-  // Dict to accumulate the parameter name associated with a path segment
+  // Dict to accumulate the segment name associated with a path parameter
   const segmentForParamName = {};
 
   // Identify inconsistent names by iterating over all paths and building up a
