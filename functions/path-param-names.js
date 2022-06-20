@@ -1,4 +1,7 @@
 // Check that path parameter names are consistent across all paths.
+// Specifically:
+// - The path parameter that follows a static path segment must be the same across all paths
+// - The static path segment that precedes a path parameter must be the same across all paths
 
 // `given` is the paths object
 module.exports = (paths) => {
@@ -10,6 +13,8 @@ module.exports = (paths) => {
 
   // Dict to accumulate the parameter name associated with a path segment
   const paramNameForSegment = {};
+  // Dict to accumulate the segment name associated with a path parameter
+  const segmentForParamName = {};
 
   // Identify inconsistent names by iterating over all paths and building up a
   // dictionary that maps a static path segment to the path parameter that
@@ -29,12 +34,22 @@ module.exports = (paths) => {
         if (paramNameForSegment[p]) {
           if (paramNameForSegment[p] !== param) {
             errors.push({
-              message: `Inconsistent path parameter names "${param}" and "${paramNameForSegment[p]}".`,
+              message: `Inconsistent parameter names "${paramNameForSegment[p]}" and "${param}" for path segment "${p}".`,
               path: ['paths', pathKey],
             });
           }
         } else {
           paramNameForSegment[p] = param;
+        }
+        if (segmentForParamName[param]) {
+          if (segmentForParamName[param] !== p) {
+            errors.push({
+              message: `Inconsistent path segments "${segmentForParamName[param]}" and "${p}" for parameter "${param}".`,
+              path: ['paths', pathKey],
+            });
+          }
+        } else {
+          segmentForParamName[param] = p;
         }
       }
     });

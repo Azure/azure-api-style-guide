@@ -19,9 +19,27 @@ test('az-path-parameter-names should find errors', () => {
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(2);
     expect(results[0].path.join('.')).toBe('paths./foo/{p2}/bar/{p3}');
-    expect(results[0].message).toContain('Inconsistent path parameter names "p2" and "p1"');
+    expect(results[0].message).toContain('Inconsistent parameter names "p1" and "p2" for path segment "foo".');
     expect(results[1].path.join('.')).toBe('paths./bar/{p4}');
-    expect(results[1].message).toContain('Inconsistent path parameter names "p4" and "p3"');
+    expect(results[1].message).toContain('Inconsistent parameter names "p3" and "p4" for path segment "bar".');
+  });
+});
+
+test('az-path-parameter-names should find a static path segment that is followed by two different path params', () => {
+  const oasDoc = {
+    swagger: '2.0',
+    paths: {
+      '/foo/{p1}': {},
+      '/bar/{p1}/baz/{p2}': {},
+      '/qux/{p2}': {},
+    },
+  };
+  return linter.run(oasDoc).then((results) => {
+    expect(results.length).toBe(2);
+    expect(results[0].path.join('.')).toBe('paths./bar/{p1}/baz/{p2}');
+    expect(results[0].message).toContain('Inconsistent path segments "foo" and "bar" for parameter "p1"');
+    expect(results[1].path.join('.')).toBe('paths./qux/{p2}');
+    expect(results[1].message).toContain('Inconsistent path segments "baz" and "qux" for parameter "p2"');
   });
 });
 
@@ -51,9 +69,9 @@ test('az-path-parameter-names should find oas3 errors', () => {
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(2);
     expect(results[0].path.join('.')).toBe('paths./foo/{p2}/bar/{p3}');
-    expect(results[0].message).toContain('Inconsistent path parameter names "p2" and "p1"');
+    expect(results[0].message).toContain('Inconsistent parameter names "p1" and "p2" for path segment "foo".');
     expect(results[1].path.join('.')).toBe('paths./bar/{p4}');
-    expect(results[1].message).toContain('Inconsistent path parameter names "p4" and "p3"');
+    expect(results[1].message).toContain('Inconsistent parameter names "p3" and "p4" for path segment "bar".');
   });
 });
 
