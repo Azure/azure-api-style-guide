@@ -132,6 +132,48 @@ test('az-security-definitions should find errors when securityDefinitions has un
   });
 });
 
+// Test multiple errors are caught even after earlier valid schemes
+test('az-security-definitions should find multiple errors after valid schemes', () => {
+  const oasDoc = {
+    swagger: '2.0',
+    securityDefinitions: {
+      ApiKey: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'api_key',
+        description: 'API Key',
+      },
+      OauthBad: {
+        description: 'Oauth2 scheme with some invalid scopes',
+        type: 'oauth2',
+        flow: 'application',
+        tokenUrl:
+          'https://login.microsoftonline.com/common/oauth2/authorize',
+        scopes: {
+          'https://atlas.microsoft.com/.default': 'default permissions to user account',
+          'user impersonation': 'default permissions to user account',
+        },
+      },
+      ApiKeyBad: {
+        type: 'apiKey',
+        in: 'query',
+        name: 'api_key',
+        description: 'API Key',
+      },
+      BasicBad: {
+        type: 'basic',
+      },
+    },
+  };
+  return linter.run(oasDoc).then((results) => {
+    expect(results.length).toBe(3);
+    expect(results[0].path.join('.')).toBe('securityDefinitions.OauthBad.scopes.user impersonation');
+    expect(results[1].path.join('.')).toBe('securityDefinitions.ApiKeyBad.in');
+    expect(results[2].path.join('.')).toBe('securityDefinitions.BasicBad.type');
+    expect(results[2].message).toContain('Security scheme must be type: oauth2 or type: apiKey.');
+  });
+});
+
 test('az-security-definitions should find no errors', () => {
   const oasDoc = {
     swagger: '2.0',

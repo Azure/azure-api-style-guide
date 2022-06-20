@@ -28,6 +28,8 @@ module.exports = (doc) => {
 
   Object.keys(schemes).forEach((schemeKey) => {
     const scheme = schemes[schemeKey];
+    // Silently ignore scheme if not an object -- oas2-schema will flag this as an error.
+    // The check here is just to avoid runtime exceptions.
     if (typeof scheme === 'object') {
       const path = ['securityDefinitions', schemeKey];
       if (scheme.type === 'oauth2') {
