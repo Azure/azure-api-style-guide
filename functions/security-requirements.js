@@ -5,7 +5,7 @@
 //   security scheme.
 
 // @param input - a security property (global or operation)
-module.exports = (input, options, context) => {
+module.exports = (input, _, context) => {
   if (input === null || !Array.isArray(input)) {
     return [];
   }
@@ -25,6 +25,7 @@ module.exports = (input, options, context) => {
     // oas2-schema requires securityReq to be an object.
     // Checking here just to avoid runtime errors.
     if (isObject(securityReq)) {
+      // security with no elements will be flagged by az-security-min-length
       Object.keys(securityReq).forEach((key) => {
         if (!schemes[key]) {
           errors.push({

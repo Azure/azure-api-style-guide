@@ -4,7 +4,7 @@
 // - Operation (input) has a `security`, or there is a global `security`.
 
 // @param input - an operation
-module.exports = (input, options, context) => {
+module.exports = (input, _, context) => {
   if (input === null || typeof input !== 'object') {
     return [];
   }

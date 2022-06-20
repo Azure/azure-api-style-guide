@@ -31,7 +31,7 @@ test('az-operation-security should find operations without security', () => {
   });
 });
 
-test('az-operation-security should find operations without security', () => {
+test('az-operation-security should find operations without security in oas3', () => {
   const oasDoc = {
     openapi: '3.0',
     paths: {
@@ -80,7 +80,7 @@ test('az-operation-security should find no errors', () => {
   });
 });
 
-test('az-operation-security should find no errors', () => {
+test('az-operation-security should find no errors in valid oas2 doc', () => {
   const oasDoc = {
     swagger: '2.0',
     security: [{
@@ -102,7 +102,7 @@ test('az-operation-security should find no errors', () => {
   });
 });
 
-test('az-operation-security should find no errors', () => {
+test('az-operation-security should find no errors in valid oas3 doc', () => {
   const oasDoc = {
     openapi: '3.0',
     security: [{
