@@ -119,6 +119,10 @@ The `Verb` of the `operationId` should be or contain a specific value depending 
 | patch            | "Update"            | could be "CreateOrUpdate" |
 | delete           | "Delete"            | |
 
+### az-operation-security
+
+Every operation should have a security requirement (may be defined globally).
+
 ### az-operation-summary-or-description
 
 Operation should have a summary or description.
@@ -228,6 +232,17 @@ An oauth2 security scheme must define at least one scope, and all scopes must ha
 ### az-security-definition-description
 
 Security definition / security scheme should have a description.
+
+### az-security-min-length
+
+A `security` property should contain at least one security requirement.
+
+### az-security-requirement
+
+Each property in a security requirement object must reference a defined security scheme.
+
+The value of property in a security requirement that references an oauth2 security scheme must be a non-empty
+array of scope names, each of which must also be defined in the referenced security scheme.
 
 ### az-success-response-body
 
