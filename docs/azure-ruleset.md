@@ -216,6 +216,15 @@ All schemas should have a description or title.
 
 Schema names should be Pascal case.
 
+### az-security-definitions
+
+Security definitions must be present and cannot be empty.
+
+Security definitions must be either type: oauth2 or type: apiKey with in: header.
+
+An oauth2 security scheme must define at least one scope, and all scopes must have a name that matches:
+- https:\/\/[\w-]+(\.[\w-]+)+/[\w-.]+
+
 ### az-security-definition-description
 
 Security definition / security scheme should have a description.
