@@ -25,17 +25,24 @@
   * [Request body](#request-body)
   * [Response body](#response-body)
   * [Support for pagination](#support-for-pagination)
+  * [Long-running operations](#long-running-operations)
   * [Error response](#error-response)
   * [Response headers](#response-headers)
 - [Parameters](#parameters)
   * [Parameter names](#parameter-names)
+  * [Parameter order](#parameter-order)
   * [Descriptions](#descriptions)
   * [Format](#format)
   * [Default](#default)
+  * [Path parameters](#path-parameters)
 - [Schemas](#schemas)
   * [Schema names](#schema-names)
   * [Descriptions](#descriptions-1)
-  * [Format](#format-1)
+  * [Type and format](#type-and-format)
+- [Security](#security)
+  * [Security Definitions](#security-definitions)
+    + [Examples](#examples)
+  * [Security Requirements](#security-requirements)
 
 <!-- tocstop -->
 
@@ -234,6 +241,41 @@ Each security scheme must have a `description` with a plain English explanation 
 For "oauth2" security schemes, `scopes` must contain at least one entry.
 
 The key of each entry in `scopes` must be of the form "<resource URI>/scope name", where "scope name" is typically ".default" for Azure services.
+
+#### Examples
+
+The following example shows how to define a security scheme for Azure Active Directory authentication:
+```
+  "securityDefinitions": {
+    "AADToken": {
+      "type": "oauth2",
+      "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "flow": "application",
+      "description": "Azure Active Directory OAuth2 authentication",
+      "scopes": {
+        "https://resource.microsoft.com/.default": "Client credential scope"
+      }
+    }
+  }
+```
+
+Note that the name "AADToken" has no significance, and "https://resource.microsoft.com/" is meant to signify the URI of the public cloud resource.
+
+The "flow" is not particularly relevant but the "implicit" oauth2 flow is now considered insecure so another choice like "application" is preferable.
+
+The following example defines an apikey security scheme:
+```
+  "securityDefinitions": {
+    "AzureKey": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header",
+      "description": "A subscription key for a Language service resource."
+    }
+  },
+```
+
+Here also, the name "AzureKey" has no significance.
 
 ### Security Requirements
 
