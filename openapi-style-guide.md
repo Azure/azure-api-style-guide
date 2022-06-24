@@ -247,7 +247,7 @@ The key of each entry in `scopes` must be of the form "<resource URI>/scope name
 The following example shows how to define a security scheme for Azure Active Directory authentication:
 ```
   "securityDefinitions": {
-    "MySecurityScheme": {
+    "AADToken": {
       "type": "oauth2",
       "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
       "flow": "application",
@@ -259,14 +259,14 @@ The following example shows how to define a security scheme for Azure Active Dir
   }
 ```
 
-Note that the name "MySecurityScheme" has no significance, and "https://resource.microsoft.com/" is meant to signify the URI of the public cloud resource.
+Note that the name "AADToken" has no significance, and "https://resource.microsoft.com/" is meant to signify the URI of the public cloud resource.
 
 The "flow" is not particularly relevant but the "implicit" oauth2 flow is now considered insecure so another choice like "application" is preferable.
 
 The following example defines an apikey security scheme:
 ```
   "securityDefinitions": {
-    "MyApiKeySecurityScheme": {
+    "AzureKey": {
       "type": "apiKey",
       "name": "Ocp-Apim-Subscription-Key",
       "in": "header",
@@ -274,6 +274,8 @@ The following example defines an apikey security scheme:
     }
   },
 ```
+
+Here also, the name "AzureKey" has no significance.
 
 ### Security Requirements
 
