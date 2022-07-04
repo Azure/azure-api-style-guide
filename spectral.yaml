@@ -17,6 +17,7 @@ functions:
   - path-param-names
   - security-definitions
   - security-requirements
+  - schema-type-and-format
   - version-policy
 rules:
   info-contact: off
@@ -442,6 +443,17 @@ rules:
       function: casing
       functionOptions:
         type: pascal
+
+  az-schema-type-and-format:
+    description: Schema should use well-defined type and format.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')].schema
+    - $.paths[*].[get,put,post,patch,delete].responses[*].schema
+    then:
+      function: schema-type-and-format
 
   az-security-definition-description:
     description: A security definition should have a description.
