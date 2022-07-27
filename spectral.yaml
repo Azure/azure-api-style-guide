@@ -54,7 +54,8 @@ rules:
   az-api-version-enum:
     description: The api-version parameter should not be an enum.
     severity: warn
-    formats: ['oas2', 'oas3']
+    # oas3 support has broken - disable for now
+    formats: ['oas2']
     given:
     - $.paths[*].parameters.[?(@.name == 'api-version')]
     - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.name == 'api-version')]
@@ -110,7 +111,8 @@ rules:
     description: Authorization, Content-type, and Accept headers should not be defined explicitly.
     message: 'Header parameter "{{value}}" should not be defined explicitly.'
     severity: warn
-    formats: ['oas2', 'oas3']
+    # oas3 support has broken - disable for now
+    formats: ['oas2']
     given:
     - $.paths[*].parameters.[?(@.in == 'header')]
     - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.in == 'header')]
@@ -243,6 +245,8 @@ rules:
   az-parameter-default-not-allowed:
     description: A required parameter should not specify a default value.
     severity: warn
+    # oas3 support has broken - restrict to oas2 for now
+    formats: ['oas2']
     given:
     - $.paths[*].parameters.[?(@.required)]
     - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.required)]
@@ -480,7 +484,8 @@ rules:
     description: The security requirement should reference a defined security scheme.
     message: '{{error}}'
     severity: warn
-    formats: ['oas2','oas3']
+    # Drop oas3 format for now
+    formats: ['oas2']
     given:
     - $.security
     - $.paths.*[get,put,post,patch,delete,options,head].security
