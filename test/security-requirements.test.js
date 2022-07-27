@@ -29,29 +29,29 @@ test('az-security-requirements should find errors', () => {
   });
 });
 
-test('az-security-requirements should find oas3 errors', () => {
-  const oasDoc = {
-    openapi: '3.0.0',
-    components: {
-      securitySchemes: {
-        jwt: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
-      },
-    },
-    security: [
-      {
-        AADToken: ['read', 'write'],
-      },
-    ],
-  };
-  return linter.run(oasDoc).then((results) => {
-    expect(results.length).toBe(1);
-    expect(results[0].path.join('.')).toBe('security.0.AADToken');
-  });
-});
+// test('az-security-requirements should find oas3 errors', () => {
+//   const oasDoc = {
+//     openapi: '3.0.0',
+//     components: {
+//       securitySchemes: {
+//         jwt: {
+//           type: 'http',
+//           scheme: 'bearer',
+//           bearerFormat: 'JWT',
+//         },
+//       },
+//     },
+//     security: [
+//       {
+//         AADToken: ['read', 'write'],
+//       },
+//     ],
+//   };
+//   return linter.run(oasDoc).then((results) => {
+//     expect(results.length).toBe(1);
+//     expect(results[0].path.join('.')).toBe('security.0.AADToken');
+//   });
+// });
 
 test('az-security-requirements should find undefined scope', () => {
   const oasDoc = {
@@ -286,26 +286,26 @@ test('az-security-requirements should find no errors', () => {
   });
 });
 
-test('az-security-requirements should find no oas3 errors', () => {
-  const oasDoc = {
-    openapi: '3.0.0',
-    components: {
-      securitySchemes: {
-        jwt: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-          description: 'JSON Web Token with credentials for the service',
-        },
-      },
-    },
-    security: [
-      {
-        jwt: [],
-      },
-    ],
-  };
-  return linter.run(oasDoc).then((results) => {
-    expect(results.length).toBe(0);
-  });
-});
+// test('az-security-requirements should find no oas3 errors', () => {
+//   const oasDoc = {
+//     openapi: '3.0.0',
+//     components: {
+//       securitySchemes: {
+//         jwt: {
+//           type: 'http',
+//           scheme: 'bearer',
+//           bearerFormat: 'JWT',
+//           description: 'JSON Web Token with credentials for the service',
+//         },
+//       },
+//     },
+//     security: [
+//       {
+//         jwt: [],
+//       },
+//     ],
+//   };
+//   return linter.run(oasDoc).then((results) => {
+//     expect(results.length).toBe(0);
+//   });
+// });
