@@ -85,14 +85,16 @@ AutoRest breaks the operation id into its `Noun` and `Verb` where `Noun` becomes
 
 The `Verb` of the `operationId` should be or contain a specific value depending on the operation method:
 
-| operation method | verb should contain | notes  |
-| ---------------- | ------------------- | ------ |
-| get              | "Get" or "List"     | should be "List" if response is pageable |
-| put              | "Create" or "Update" | could be "CreateOrUpdate" |
-| patch            | "Update"            | could be "CreateOrUpdate" |
+| operation method | verb should contain | Notes |
+| ---------------- | ------------------- | ----- |
+| get on a resource | "Get"     | last path segment is parameter |
+| get on a collection | "List"  | last path segment is static |
+| put              | "Create" if operation returns 201<br/>"Replace" if operation returns 200 | could be "CreateOrReplace" |
+| patch            | "Create" if operation returns 201<br/>"Update" if operation returns 201 | could be "CreateOrUpdate" |
 | delete           | "Delete"            | |
 
-Further, a put or patch that supports both create and update should have "Create" and "Update" in the verb.
+Do not use "Post", "Put", or "Patch" in the `operationId`. The `Verb` should convey the action
+performed by the operation rather than the HTTP method used in the request.
 
 ### Request body
 

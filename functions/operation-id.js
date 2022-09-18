@@ -1,10 +1,15 @@
 // Check conformance to Azure operationId conventions:
 // - operationIds should have the form "noun_verb" with just one underscore separator [R1001, R2055]
-// - get operation with pageable response should have "list" in the operationId verb [R1003]
-// - get operation should have "get" or "list" in the operationId verb [R1005]
-// - put operation should have "create" in the operationId verb [R1006]
-// - patch operation should have "update" in the operationId verb [R1007]
-// - delete operations should have "delete" in the "verb" component of the operationId [R1009]
+// - get operation on a collection should have "list" in the operationId verb
+// - get operation on a single instance should have "get" in the operationId verb
+// - put operation that returns 201 should have "create" in the operationId verb
+// - put operation that returns 200 should have "replace" in the operationId verb
+// - put operation that returns 200 should not have "update" in the operationId verb
+// - patch operation that returns 201 should have "create" in the operationId verb
+// - patch operation that returns 200 should have "update" in the operationId verb
+// - patch operation should not have "patch" in the operationId verb
+// - post operation should not have "post" in the operationId verb
+// - delete operation should have "delete" in the operationId verb
 
 module.exports = (operation, _opts, paths) => {
   // targetVal should be an operation
@@ -30,45 +35,140 @@ module.exports = (operation, _opts, paths) => {
 
   const verb = m ? m[1] : operation.operationId;
   const method = path[path.length - 1];
+  const statusCodes = operation.responses ? Object.keys(operation.responses) : [];
 
-  const isCreate = ['put', 'patch'].includes(method) && operation.responses?.['201'];
-  const isUpdate = ['put', 'patch'].includes(method) && operation.responses?.['200'];
-
-  if (isCreate && isUpdate) {
-    if (!verb.match(/create/i) || !verb.match(/update/i)) {
-      errors.push({
-        message: `OperationId for ${method} method should contain both "Create" and "Update"`,
-        path: [...path, 'operationId'],
-      });
-    }
-  } else {
-    const isList = method === 'get' && operation['x-ms-pageable'];
-    const patterns = {
-      get: isList ? /list/i : /(get|list)/i,
-      put: isCreate ? /create/i : /(create|update)/i,
-      patch: /update/i,
-      delete: /delete/i,
-    };
-    const frags = {
-      get: isList ? '"List"' : '"Get" or "list"',
-      put: isCreate ? '"Create"' : '"Create" or "Update"',
-      patch: '"Update"',
-      delete: '"Delete"',
-    };
-
-    if (patterns[method] && !verb.match(patterns[method])) {
-      // Customize message for list operation
-      if (isList) {
+  if (method === 'get') {
+    const opPath = path[path.length - 2];
+    const pathIsCollection = !opPath.endsWith('}');
+    if (pathIsCollection) {
+      if (!verb.match(/list/i)) {
         errors.push({
-          message: 'OperationId for get method on a collection should contain "List"',
-          path: [...path, 'operationId'],
-        });
-      } else {
-        errors.push({
-          message: `OperationId for ${method} method should contain ${frags[method]}`,
+          message: 'OperationId for get on a collection should contain "list"',
           path: [...path, 'operationId'],
         });
       }
+    } else if (!verb.match(/get/i)) {
+      errors.push({
+        message: 'OperationId for get on a single object should contain "get"',
+        path: [...path, 'operationId'],
+      });
+    }
+  } else if (method === 'put') {
+    if (statusCodes.includes('200') && statusCodes.includes('201')) {
+      if (!verb.match(/create/i) || !verb.match(/replace/i)) {
+        errors.push({
+          message: 'OperationId for put with 200 and 201 responses should contain "create" and "replace"',
+          path: [...path, 'operationId'],
+        });
+      }
+    } else if (statusCodes.includes('200') && !statusCodes.includes('201')) {
+      if (!verb.match(/replace/i)) {
+        errors.push({
+          message: 'OperationId for put with 200 response should contain "replace"',
+          path: [...path, 'operationId'],
+        });
+      }
+      if (verb.match(/create/i)) {
+        errors.push({
+          message: 'OperationId for put without 201 response should not contain "create"',
+          path: [...path, 'operationId'],
+        });
+      }
+    } else if (statusCodes.includes('201') && !statusCodes.includes('200')) {
+      if (!verb.match(/create/i)) {
+        errors.push({
+          message: 'OperationId for put with 201 response should contain "create"',
+          path: [...path, 'operationId'],
+        });
+      }
+      if (verb.match(/replace/i)) {
+        errors.push({
+          message: 'OperationId for put without 200 response should not contain "replace"',
+          path: [...path, 'operationId'],
+        });
+      }
+    }
+
+    // Anti-patterns
+
+    // operationId for put should not contain "update"
+    const update = verb.match(/update/i)?.[0];
+    if (update) {
+      errors.push({
+        message: `OperationId for put should not contain "${update}"`,
+        path: [...path, 'operationId'],
+      });
+    }
+
+    // operationId for put should not contain "put"
+    const put = verb.match(/put/i)?.[0];
+    if (put) {
+      errors.push({
+        message: `OperationId for put should not contain "${put}"`,
+        path: [...path, 'operationId'],
+      });
+    }
+  } else if (method === 'patch') {
+    if (statusCodes.includes('200') && statusCodes.includes('201')) {
+      if (!verb.match(/create/i) || !verb.match(/update/i)) {
+        errors.push({
+          message: 'OperationId for patch with 200 and 201 responses should contain "create" and "update"',
+          path: [...path, 'operationId'],
+        });
+      }
+    } else if (statusCodes.includes('200') && !statusCodes.includes('201')) {
+      if (!verb.match(/update/i)) {
+        errors.push({
+          message: 'OperationId for patch with 200 response should contain "update"',
+          path: [...path, 'operationId'],
+        });
+      }
+      if (verb.match(/create/i)) {
+        errors.push({
+          message: 'OperationId for patch without 201 response should not contain "create"',
+          path: [...path, 'operationId'],
+        });
+      }
+    } else if (statusCodes.includes('201') && !statusCodes.includes('200')) {
+      if (!verb.match(/create/i)) {
+        errors.push({
+          message: 'OperationId for patch with 201 response should contain "create"',
+          path: [...path, 'operationId'],
+        });
+      }
+      if (verb.match(/update/i)) {
+        errors.push({
+          message: 'OperationId for patch without 200 response should not contain "update"',
+          path: [...path, 'operationId'],
+        });
+      }
+    }
+
+    // Anti-patterns
+
+    // operationId for patch should not contain "patch"
+    const patch = verb.match(/patch/i)?.[0];
+    if (patch) {
+      errors.push({
+        message: `OperationId for patch should not contain "${patch}"`,
+        path: [...path, 'operationId'],
+      });
+    }
+  } else if (method === 'post') {
+    // operationId for post should not contain "post"
+    const post = verb.match(/post/i)?.[0];
+    if (post) {
+      errors.push({
+        message: `OperationId for post should not contain "${post}"`,
+        path: [...path, 'operationId'],
+      });
+    }
+  } else if (method === 'delete') {
+    if (!verb.match(/delete/i)) {
+      errors.push({
+        message: 'OperationId for delete should contain "delete"',
+        path: [...path, 'operationId'],
+      });
     }
   }
 
