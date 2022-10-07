@@ -161,6 +161,24 @@ rules:
     then:
       function: undefined
 
+  az-ms-enum-descriptions:
+    description: Include descriptions for all values in the x-ms-enum extension.
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $..x-ms-enum
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: object
+                required: ['value', 'description']
+          required: ['values']
+
   az-ms-paths:
     description: Don't use x-ms-paths except where necessary to support legacy APIs.
     severity: warn

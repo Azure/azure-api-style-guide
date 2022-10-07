@@ -90,6 +90,11 @@ A 202 response should include an Operation-Location response header.
 
 The use of the autorest `x-ms-client-flatten` extension is discouraged.
 
+### az-ms-enum-descriptions
+
+Include descriptions for all values in the `x-ms-enum` extension.
+See the [`x-ms-enum` documentation](https://github.com/Azure/autorest/tree/main/docs/extensions#x-ms-enum) for more information.
+
 ### az-ms-paths
 
 Don't use the Autorest `x-ms-paths` extension except where necessary to support legacy APIs.
