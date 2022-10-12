@@ -329,15 +329,6 @@ rules:
     then:
       function: param-order
 
-  az-path-parameter-names:
-    description: Path parameter names should be consistent across all paths.
-    message: '{{error}}'
-    severity: warn
-    formats: ['oas2', 'oas3']
-    given: $.paths
-    then:
-      function: path-param-names
-
   # Patch request body content type should be application/merge-patch+json
   az-patch-content-type:
     description: The request body content type for patch operations should be JSON merge patch.
@@ -347,6 +338,17 @@ rules:
     given: $
     then:
       function: patch-content-type
+
+  # Patch on a path that does not end in path parameter is uncommon.
+  az-patch-path:
+    description: Patch on a path that does not end with a path parameter is uncommon.
+    severity: info
+    formats: ['oas2', 'oas3']
+    given: $.paths[*].patch^~
+    then:
+      function: pattern
+      functionOptions:
+        match: '/\}$/'
 
   # Static path segments should be kebab-case
   az-path-case-convention:
@@ -375,6 +377,15 @@ rules:
         # Check each path segment individually and ignore param segments
         # Note: the ':' is only allowed in the final path segment
         match: '^(\/([0-9A-Za-z._~-]+|{[^}]+}))*\/([0-9A-Za-z._~-]+|{[^}]*})?(:[0-9A-Za-z._~-]+)?$'
+
+  az-path-parameter-names:
+    description: Path parameter names should be consistent across all paths.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2', 'oas3']
+    given: $.paths
+    then:
+      function: path-param-names
 
   az-path-parameter-schema:
     description: 'Path parameter should be type: string and specify maxLength and pattern.'
@@ -432,9 +443,8 @@ rules:
       function: truthy
 
   az-put-path:
-    description: The path for a put should have a final path parameter.
-    message: The path for a put should have a final path parameter.
-    severity: warn
+    description: Put on a path that does not end with a path parameter is uncommon.
+    severity: info
     formats: ['oas2', 'oas3']
     given: $.paths[*].put^~
     then:
