@@ -179,6 +179,12 @@ The request body content type for patch operations should be JSON merge patch.
 
 Only patch operations should accept JSON merge patch.
 
+### az-patch-path
+
+Patch operations are typically issued on a specific resource whose id is the final segment of the path.
+Therefore, it is uncommon for a patch operation to be defined on a path that does not have a path parameter
+as the final path segment.
+
 ### az-path-characters
 
 Service-defined path segments should be restricted to 0-9 A-Z a-z - . _ ~, with : allowed only as described below to designate an action operation.
@@ -206,8 +212,9 @@ Property names should be lowerCamelCase.
 
 ### az-put-path
 
-The path for a put operation should have a path parameter as the final path segment.
-This path parameter is the identifier of the resource to create or update.
+Put operations are typically issued on a specific resource whose id is the final segment of the path.
+Therefore, it is uncommon for a put operation to be defined on a path that does not have a path parameter
+as the final path segment.
 
 ### az-request-body-not-allowed
 
