@@ -47,6 +47,10 @@ All operations should have a default (error) response.
 
 A delete operation should have a 204 response.
 
+### az-error-code-response-header
+
+All error responses should specify an `x-ms-error-code` response header.
+
 ### az-error-response
 
 Error response body should conform to Azure API Guidelines.
