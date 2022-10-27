@@ -90,6 +90,24 @@ rules:
     then:
       function: delete-204-response
 
+  az-error-code-response-header:
+    description: Error response should contain a x-ms-error-code header.
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths[*][*].responses[?(@property >= 400)]
+    - $.paths[*][*].responses["default"]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ['headers']
+          properties:
+            headers:
+              type: object
+              required: ["x-ms-error-code"]
+
   az-error-response:
     description: Error response body should conform to Microsoft Azure API Guidelines.
     message: '{{error}}'
@@ -186,7 +204,7 @@ rules:
     - $.paths.*[get,put,post,patch,delete,options,head]
     then:
       function: operation-id
-  
+
   az-operation-security:
     description: Operation should have a security requirement or globally.
     message: Operation should have a security requirement.
@@ -464,7 +482,7 @@ rules:
     message: Security definition should have a description.
     severity: warn
     formats: ['oas2', 'oas3']
-    given: 
+    given:
     - $.securityDefinitions[*]
     - $.components.securitySchemes[*]
     then:
