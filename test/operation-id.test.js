@@ -22,12 +22,13 @@ test('az-operation-id should find operationId not Noun_Verb', () => {
     },
   };
   return linter.run(oasDoc).then((results) => {
-    expect(results).toHaveLength(2);
+    expect(results).toHaveLength(3);
     expect(results[0].path.join('.')).toBe('paths./api/test1.get.operationId');
-    expect(results[1].path.join('.')).toBe('paths./api/test1.post.operationId');
-    results.forEach((result) => expect(result.message).toContain(
-      'OperationId should be of the form "Noun_Verb"',
-    ));
+    expect(results[0].message).toBe('OperationId should be of the form "Noun_Verb"');
+    expect(results[1].path.join('.')).toBe('paths./api/test1.get.operationId');
+    expect(results[1].message).toBe('OperationId for get method should contain "Get" or "list"');
+    expect(results[2].path.join('.')).toBe('paths./api/test1.post.operationId');
+    expect(results[2].message).toBe('OperationId should be of the form "Noun_Verb"');
   });
 });
 
