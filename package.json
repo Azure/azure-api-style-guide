@@ -15,9 +15,9 @@
     "url": "https://github.com/Azure/azure-api-style-guide"
   },
   "devDependencies": {
-    "@stoplight/spectral-core": "1.8.1",
-    "@stoplight/spectral-ruleset-migrator": "^1.7.1",
-    "@stoplight/spectral-rulesets": "^1.3.1",
+    "@stoplight/spectral-core": "^1.15.1",
+    "@stoplight/spectral-ruleset-migrator": "^1.9.0",
+    "@stoplight/spectral-rulesets": "^1.14.1",
     "ajv": "^8.6.2",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
