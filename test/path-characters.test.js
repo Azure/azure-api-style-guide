@@ -28,6 +28,8 @@ test('az-path-characters should find no errors', () => {
   const oasDoc = {
     swagger: '2.0',
     paths: {
+      '/': {},
+      '/:foobar': {},
       '/abcdefghijklmnopqrstuvwxyz0123456789': {},
       '/A0.B1.C2/D3_E4_F5/GHI-JKL-MNO/~PQRSTUVWXYZ': {},
       '/foo/{$#@&^}:goo': {},

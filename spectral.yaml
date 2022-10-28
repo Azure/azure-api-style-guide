@@ -307,6 +307,20 @@ rules:
     then:
       function: patch-content-type
 
+  # Static path segments should be kebab-case
+  az-path-case-convention:
+    description: Static path segments should be kebab-case.
+    message: Static path segments should be kebab-case.
+    severity: info
+    formats: ['oas2', 'oas3']
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        # Check each path segment individually and ignore param segments
+        # Note: the ':' is only allowed in the final path segment
+        match: '^(\/([a-z][a-z0-9-]+|{[^}]+}))*\/([a-z][a-z0-9-]+|{[^}]*})?(:[a-z][a-z0-9-]+)?$'
+
   # DO limit your URLs characters to 0-9 A-Z a-z - . _ ~ :
   az-path-characters:
     description: Path should contain only recommended characters.
@@ -319,7 +333,7 @@ rules:
       functionOptions:
         # Check each path segment individually and ignore param segments
         # Note: the ':' is only allowed in the final path segment
-        match: '^(/([0-9A-Za-z._~-]+|{[^}]+}))*(/([0-9A-Za-z._~:-]+|{[^}]*}(:[0-9A-Za-z._~-]+)?))$'
+        match: '^(\/([0-9A-Za-z._~-]+|{[^}]+}))*\/([0-9A-Za-z._~-]+|{[^}]*})?(:[0-9A-Za-z._~-]+)?$'
 
   az-path-parameter-schema:
     description: 'Path parameter should be type: string and specify maxLength and pattern.'
