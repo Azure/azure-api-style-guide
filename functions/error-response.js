@@ -139,10 +139,13 @@ function validateErrorResponse(errorResponse, responsePath) {
 
   // The error response schema should conform to Microsoft API Guidelines
   if (!errorResponse.schema) {
-    errors.push({
-      message: 'Error response should have a schema.',
-      path: responsePath,
-    });
+    const method = responsePath[responsePath.length - 3];
+    if (method !== 'head') {
+      errors.push({
+        message: 'Error response should have a schema.',
+        path: responsePath,
+      });
+    }
   } else {
     errors.push(
       ...validateErrorResponseSchema(errorResponse.schema, [...responsePath, 'schema']),
