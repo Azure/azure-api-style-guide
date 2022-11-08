@@ -156,6 +156,34 @@ test('az-error-response should find errors', () => {
   });
 });
 
+test('az-error-response should not flag missing schema in error response for head method', () => {
+  const oasDoc = {
+    swagger: '2.0',
+    paths: {
+      '/api/Paths': {
+        head: {
+          responses: {
+            200: {
+              description: 'Success',
+            },
+            default: {
+              description: 'Error',
+              headers: {
+                'x-ms-error-code': {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+  return linter.run(oasDoc).then((results) => {
+    expect(results.length).toBe(0);
+  });
+});
+
 test('az-error-response should find no errors', () => {
   const oasDoc = {
     swagger: '2.0',
