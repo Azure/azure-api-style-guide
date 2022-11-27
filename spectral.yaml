@@ -15,6 +15,7 @@ functions:
   - patch-content-type
   - path-param-schema
   - path-param-names
+  - readonly-in-response-schema
   - security-definitions
   - security-requirements
   - schema-type-and-format
@@ -485,6 +486,14 @@ rules:
       function: pattern
       functionOptions:
         notMatch: '/^array$/'
+
+  az-readonly-in-response-schema:
+    description: Properties in response-only schemas should not be marked as readOnly true
+    severity: warn
+    formats: ['oas2']
+    given: $.definitions[*]
+    then:
+      function: readonly-in-response-schema
 
   az-schema-description-or-title:
     description: All schemas should have a description or title.

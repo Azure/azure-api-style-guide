@@ -216,6 +216,10 @@ Put operations are typically issued on a specific resource whose id is the final
 Therefore, it is uncommon for a put operation to be defined on a path that does not have a path parameter
 as the final path segment.
 
+### az-readonly-in-response-schema
+
+Don't mark properties as `readOnly: true` in schemas that are only used within response bodies.
+
 ### az-request-body-not-allowed
 
 A get or delete operation must not accept a request body/body parameter.
