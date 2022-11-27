@@ -196,6 +196,10 @@ Property names should be lowerCamelCase.
 The path for a put operation should have a path parameter as the final path segment.
 This path parameter is the identifier of the resource to create or update.
 
+### az-readonly-in-response-schema
+
+Don't mark properties as `readOnly: true` in schemas that are only used within response bodies.
+
 ### az-request-body-not-allowed
 
 A get or delete operation must not accept a request body/body parameter.
