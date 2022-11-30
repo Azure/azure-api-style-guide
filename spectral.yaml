@@ -426,7 +426,8 @@ rules:
     message: Property should have a defined type.
     severity: warn
     resolved: false
-    given: $..properties[?(@object() && @.$ref == undefined)]
+    # Exclude properties that contains allOf to avoid false positives.
+    given: $..properties[?(@object() && @.$ref == undefined && @.allOf == undefined)]
     then:
       field: type
       function: truthy
