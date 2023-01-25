@@ -202,6 +202,9 @@ the characters that can be be used in the parameter value.
 
 Using post for a create operation is discouraged.  Use put or patch instead.
 
+### az-property-default-not-allowed
+
+A required property should not specify a default value.
 ### az-property-description
 
 All schema properties should have a description.

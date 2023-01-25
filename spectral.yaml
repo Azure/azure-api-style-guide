@@ -15,6 +15,7 @@ functions:
   - patch-content-type
   - path-param-schema
   - path-param-names
+  - property-default-not-allowed
   - readonly-in-response-schema
   - security-definitions
   - security-requirements
@@ -408,6 +409,17 @@ rules:
     then:
       field: '201'
       function: falsy
+
+  az-property-default-not-allowed:
+    description: A required property should not specify a default value.
+    message: '{{error}}'
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')].schema
+    - $.paths[*].[get,put,post,patch,delete].responses[*].schema
+    then:
+      function: property-default-not-allowed
 
   az-property-description:
     description: All schema properties should have a description.
