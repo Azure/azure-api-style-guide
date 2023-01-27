@@ -152,7 +152,48 @@ rules:
       field: x-ms-long-running-operation
       function: truthy
 
-  az-lro-headers:
+  az-lro-get-not-allowed:
+    description: Get operations should not be long-running.
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $.paths[*].get.responses.202
+    then:
+      function: falsy
+
+  az-lro-patch-not-allowed:
+    description: Patch operations should not be long-running.
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $.paths[*].patch.responses.202
+    then:
+      function: falsy
+
+  az-lro-put-response-codes:
+    description: Long-running PUT should not return a 202 response.
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $.paths[*].put.responses.202
+    then:
+      function: falsy
+
+  az-lro-response-codes:
+    description: An operation that returns 202 should not return other 2XX responses.
+    severity: warn
+    formats: ['oas2','oas3']
+    # The responses object of an operation that includes a 202 response
+    # Exclude get, put and patch since the 202 for these will be flagged in other rules
+    given: $.paths[*].[post,delete].responses[?(@property == '202')]^
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          not:
+            anyOf:
+              - required: ['200']
+              - required: ['201']
+              - required: ['204']
+
+  az-lro-response-headers:
     description: A 202 response should include an Operation-Location response header.
     message: A 202 response should include an Operation-Location response header.
     severity: warn
@@ -162,6 +203,16 @@ rules:
       function: has-header
       functionOptions:
         name: Operation-location
+
+  az-lro-response-schema:
+    description: A 202 response should include a schema for the operation status monitor.
+    message: A 202 response should include a schema for the operation status monitor.
+    severity: warn
+    formats: ['oas2']
+    given: $.paths[*][*].responses[?(@property == '202')]
+    then:
+      field: schema
+      function: truthy
 
   az-204-no-response-body:
     description: A 204 response should have no response body.
@@ -586,13 +637,14 @@ rules:
       functionOptions:
         min: 1
 
-  # All success responses except 202 & 204 should define a response body
+  # All success responses except 204 should define a response body
   # ref: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#1321-put
   az-success-response-body:
-    description: All success responses except 202 & 204 should define a response body.
+    description: All success responses except 204 should define a response body.
     severity: warn
     formats: ['oas2']
     # list http methods explicitly to exclude head
+    # exclude 202 to avoid duplication with az-lro-response-schema rule
     given: $.paths[*][get,put,post,patch,delete].responses[?(@property >= 200 && @property < 300 && @property != '202' && @property != '204')]
     then:
       field: schema
