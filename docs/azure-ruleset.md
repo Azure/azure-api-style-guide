@@ -45,7 +45,7 @@ All operations should have a default (error) response.
 
 ### az-delete-204-response
 
-A delete operation should have a 204 response.
+A (non-long-running) delete operation should have a 204 response.
 
 ### az-error-code-response-header
 
@@ -86,9 +86,29 @@ explicitly states that these header definitions should be ignored.
 
 Operations with a 202 response should specify `x-ms-long-running-operation: true`.
 
-### az-lro-headers
+### az-lro-get-not-allowed
+
+Get operations should not be long-running.
+
+### az-lro-patch-not-allowed
+
+Patch operations should not be long-running.
+
+### az-lro-put-response-codes
+
+A long-running PUT operation should not return a 202 response.
+
+### az-lro-response-codes
+
+An operation that returns 202 should not return other 2XX responses.
+
+### az-lro-response-headers
 
 A 202 response should include an Operation-Location response header.
+
+### az-lro-response-schema
+
+A 202 response should have a response body that contains a representation of the "status monitor" -- the same schema that is returned from GET on the Operation-Location.
 
 ### az-ms-client-flatten
 
@@ -318,11 +338,7 @@ array of scope names, each of which must also be defined in the referenced secur
 
 ### az-success-response-body
 
-All success responses except 202 and 204 should define a response body.
-
-### az-success-response-nobody
-
-Responses for status codes 202 and 204 should have no response body.
+All success responses except 204 should define a response body.
 
 ### az-top-default-not-allowed
 
