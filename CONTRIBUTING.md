@@ -9,6 +9,27 @@ If you would like to become an active contributor to this project please follow 
 - If you are reporting a bug, please indicate which version of the package you are using and provide steps to reproduce the problem.
 - If you are submitting a feature request, please indicate if you are willing or able to submit a PR for it.
 
+## Coding Style / Conventions
+
+### JavaScript
+
+JavaScript code in this project should follow the [AirBnB JavaScript Style Guide][] as enforced by the [ESLint][] tool
+with the configuration file `.eslintrc.js` in the root of the project.
+
+[AirBnB JavaScript Style Guide]: https://github.com/airbnb/javascript
+[ESLint]: https://eslint.org/
+
+### Markdown
+
+Markdown files in this project should follow the style enforced by the [markdownlint tool][],
+as configured by the `.markdownlint.json` file in the root of the project.
+
+[markdownlint tool]: https://github.com/DavidAnson/markdownlint
+
+### Spectral rules file
+
+Rules in the Spectral rules file `spectral.yaml` should be listed in alphabetical order by rule name.
+
 ## Building and Testing
 
 To build and test the project locally, clone the repo and issue the following commands
