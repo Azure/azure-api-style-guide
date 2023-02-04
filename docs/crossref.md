@@ -82,7 +82,7 @@
 | [AvoidEmptyResponseSchema][r4008] | R4008 | Add |
 | [requiredReadOnlySystemData][r4009] | R4009 | |
 | [requiredDefaultResponse][r4010] | R4010 | [az-error-response](./azure-ruleset.md#az-error-response) |
-| [DeleteOperationResponses][r4011] | R4011 | [az-delete-204-response](./azure-ruleset.md#az-delete-204-response) |
+| [DeleteOperationResponses][r4011] | R4011 | [az-delete-response-codes](./azure-ruleset.md#az-delete-response-codes) |
 | [XmsPageableMustHaveCorrespondingResponse][r4012] | R4012 | [az-pagination-response](./azure-ruleset.md#az-pagination-response) |
 | [IntegerTypeMustHaveFormat][r4013] | R4013 | Add |
 | [AllResourcesMustHaveGetOperation][r4014] | R4014 |  |

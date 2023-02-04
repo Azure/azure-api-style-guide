@@ -2,7 +2,6 @@ extends: spectral:oas
 functionsDir: './functions'
 functions:
   - consistent-response-body
-  - delete-204-response
   - error-response
   - has-header
   - operation-id
@@ -83,14 +82,22 @@ rules:
       field: default
       function: truthy
 
-  az-delete-204-response:
+  az-delete-response-codes:
     description: A delete operation should have a 204 response.
     message: A delete operation should have a `204` response.
     severity: warn
     formats: ['oas2','oas3']
+    # The responses object of a delete operation
     given: $.paths[*].delete.responses
     then:
-      function: delete-204-response
+      function: schema
+      functionOptions:
+        schema:
+          oneOf:
+          - required: ['202']
+          - required: ['204']
+            not:
+              required: ['200']
 
   az-error-code-response-header:
     description: Error response should contain a x-ms-error-code header.
