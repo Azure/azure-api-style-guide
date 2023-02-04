@@ -43,9 +43,9 @@ as the create operation 201 response.
 
 All operations should have a default (error) response.
 
-### az-delete-204-response
+### az-delete-response-codes
 
-A (non-long-running) delete operation should have a 204 response.
+A (non-long-running) delete operation should have a 204 response and no other 2xx response.
 
 ### az-error-code-response-header
 
