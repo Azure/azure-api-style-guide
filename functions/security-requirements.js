@@ -53,7 +53,7 @@ module.exports = (input, _, context) => {
             });
           }
           scopes.forEach((scope, scopeIndex) => {
-            if (!scheme.scopes[scope]) {
+            if (!(scope in scheme.scopes)) {
               errors.push({
                 message: `Scope "${scope}" is not defined for security scheme "${key}".`,
                 path: [...path, index, key, scopeIndex],

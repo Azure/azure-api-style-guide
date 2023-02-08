@@ -274,10 +274,21 @@ test('az-security-requirements should find no errors', () => {
         in: 'header',
         description: 'API Key for your subscription',
       },
+      OAuth2Auth: {
+        type: 'oauth2',
+        flow: 'implicit',
+        authorizationUrl: 'https://example.com/oauth2/v2.0/authorize',
+        scopes: {
+          'https://example.com/.default': '',
+        },
+      },
     },
     security: [
       {
         apim_key: [],
+      },
+      {
+        OAuth2Auth: ['https://example.com/.default'],
       },
     ],
   };
