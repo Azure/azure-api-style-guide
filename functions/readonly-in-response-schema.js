@@ -1,11 +1,13 @@
 // Flag any properties that are readonly in the response schema.
 
 // Scan an OpenAPI document to determine if a schema is a response-only schema,
-// which means it is not references by any request schemas.
+// which means it is not referenced by any request schemas.
 // Any schema that is referenced by a request is considered a request schema.
 // Any schema referenced by a request schema is also considered a request schema.
+// Any schema that "allOf"'s a request schema with a discriminator is also a request schema.
 // Any schema that is not a request schema is considered a response-only schema.
 
+// requestSchemas is a set of schema names that we have determined are request schemas
 let requestSchemas;
 
 function getRequestSchemas(oasDoc) {
@@ -61,6 +63,17 @@ function getRequestSchemas(oasDoc) {
             if (!requestSchemas.has(ref) && !schemasToProcess.includes(ref)) {
               schemasToProcess.push(ref);
             }
+          }
+        }
+      }
+      if (schema.discriminator) {
+        // Check all the schemas in the document and add any that "allOf" this schema
+        // into schemasToProcess
+        const schemaRef = `#/definitions/${schemaName}`;
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of Object.entries(oasDoc.definitions)) {
+          if (value.allOf?.some((elem) => elem.$ref === schemaRef)) {
+            schemasToProcess.push(key);
           }
         }
       }
