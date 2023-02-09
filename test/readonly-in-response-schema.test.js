@@ -93,6 +93,24 @@ test('az-readonly-in-response-schema should not find errors', () => {
           },
         },
       },
+      '/test2': {
+        post: {
+          parameters: [
+            {
+              in: 'body',
+              name: 'body',
+              schema: {
+                $ref: '#/definitions/Pet',
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: 'Success',
+            },
+          },
+        },
+      },
     },
     definitions: {
       Model1: {
@@ -150,6 +168,29 @@ test('az-readonly-in-response-schema should not find errors', () => {
         type: 'object',
         properties: {
           id: {
+            type: 'string',
+            readOnly: true,
+          },
+        },
+      },
+      Pet: {
+        discriminator: 'petType',
+      },
+      Dog: {
+        type: 'object',
+        allOf: [{ $ref: '#/definitions/Pet' }],
+        properties: {
+          cute: {
+            type: 'number',
+            readOnly: true,
+          },
+        },
+      },
+      Cat: {
+        type: 'object',
+        allOf: [{ $ref: '#/definitions/Pet' }],
+        properties: {
+          attitude: {
             type: 'string',
             readOnly: true,
           },
