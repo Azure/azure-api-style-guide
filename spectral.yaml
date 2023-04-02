@@ -547,6 +547,18 @@ rules:
       field: required
       function: truthy
 
+  az-request-body-type:
+    description: Request body schema must not be a bare array.
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')].schema
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        notMatch: '/^array$/'
+
   az-response-body-type:
     description: Response body schema must not be a bare array.
     severity: warn
