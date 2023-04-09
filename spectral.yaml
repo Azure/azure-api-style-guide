@@ -596,9 +596,10 @@ rules:
     formats: ['oas2']
     given: $.definitions.*~
     then:
-      function: casing
+      # Pascal case with optional "." separator
+      function: pattern
       functionOptions:
-        type: pascal
+        match: '^([A-Z][a-z0-9]+\.?)*[A-Z][a-z0-9]+$'
 
   az-schema-type-and-format:
     description: Schema should use well-defined type and format.
