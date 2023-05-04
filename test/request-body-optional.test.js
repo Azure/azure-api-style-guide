@@ -94,6 +94,18 @@ test('az-request-body-optional should find no errors', () => {
           ],
         },
       },
+      '/test4': {
+        post: {
+          parameters: [
+            {
+              name: 'body',
+              in: 'body',
+              type: 'string',
+              required: false,
+            },
+          ],
+        },
+      },
     },
   };
   return linter.run(oasDoc).then((results) => {
