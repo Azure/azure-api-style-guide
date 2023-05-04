@@ -1,4 +1,5 @@
 const MERGE_PATCH = 'application/merge-patch+json';
+const JSON_PATCH = 'application/json-patch+json';
 
 // Verify that all patch operations and only patch operations consume merge-patch.
 function checkOperationConsumes(targetVal) {
@@ -9,11 +10,15 @@ function checkOperationConsumes(targetVal) {
       ['post', 'put'].forEach((method) => {
         if (paths[path][method]) {
           const { consumes } = paths[path][method];
-          if (consumes?.includes(MERGE_PATCH)) {
-            errors.push({
-              message: `A ${method} operation should not consume 'application/merge-patch+json' content type.`,
-              path: ['paths', path, method, 'consumes'],
-            });
+          const patchTypes = [MERGE_PATCH, JSON_PATCH];
+          // eslint-disable-next-line no-restricted-syntax
+          for (const type of patchTypes) {
+            if (consumes?.includes(type)) {
+              errors.push({
+                message: `A ${method} operation should not consume '${type}' content type.`,
+                path: ['paths', path, method, 'consumes'],
+              });
+            }
           }
         }
       });
