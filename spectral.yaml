@@ -542,10 +542,10 @@ rules:
     severity: info
     formats: ['oas2']
     given:
-    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body')]
+    # Don't flag request body if it explicitly specifies required: false
+    - $.paths[*].[put,post,patch].parameters.[?(@.in == 'body' && @.required == undefined)]
     then:
-      field: required
-      function: truthy
+      function: falsy
 
   az-request-body-type:
     description: Request body schema must not be a bare array.
