@@ -82,6 +82,30 @@ rules:
       field: default
       function: truthy
 
+  az-datetime-names-convention:
+    description: Use an "At" suffix in names of date-time values.
+    severity: warn
+    formats: ['oas2','oas3']
+    resolved: false
+    given:
+    - $..[?(@.type == 'object' && @.properties)].properties[?(@.format == "date-time")]~
+    then:
+      function: pattern
+      functionOptions:
+        match: '/At$/'
+
+  az-datetime-param-names-convention:
+    description: Use an "At" suffix in names of date-time values.
+    severity: warn
+    formats: ['oas2']
+    given:
+    - $.paths[*].parameters.[?(@.format == 'date-time')].name
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.[?(@.format == "date-time")].name
+    then:
+      function: pattern
+      functionOptions:
+        match: '/At$/'
+
   az-delete-response-codes:
     description: A delete operation should have a 204 response.
     message: A delete operation should have a `204` response.
@@ -524,6 +548,14 @@ rules:
       functionOptions:
         match: '/\}$/'
 
+  az-readonly-in-response-schema:
+    description: Properties in response-only schemas should not be marked as readOnly true
+    severity: warn
+    formats: ['oas2']
+    given: $.definitions[*]
+    then:
+      function: readonly-in-response-schema
+
   az-request-body-not-allowed:
     description: A get or delete operation must not accept a body parameter.
     severity: error
@@ -569,14 +601,6 @@ rules:
       function: pattern
       functionOptions:
         notMatch: '/^array$/'
-
-  az-readonly-in-response-schema:
-    description: Properties in response-only schemas should not be marked as readOnly true
-    severity: warn
-    formats: ['oas2']
-    given: $.definitions[*]
-    then:
-      function: readonly-in-response-schema
 
   az-schema-description-or-title:
     description: All schemas should have a description or title.
