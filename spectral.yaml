@@ -64,6 +64,30 @@ rules:
       field: enum
       function: falsy
 
+  az-boolean-names-convention:
+    description: Do not use "is" prefix in names of boolean values
+    severity: warn
+    resolved: false
+    given:
+    # We don't filter on type, because its complicated and no other types should start with "is" either
+    - $..[?(@.type === 'object' && @.properties)].properties.*~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: '/^is[A-Z]/'
+
+  az-boolean-param-names-convention:
+    description: Do not use "is" prefix in names of boolean values
+    severity: warn
+    given:
+    # We don't filter on type, because its complicated and no other types should start with "is" either
+    - $.paths[*].parameters.*.name
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters.*.name
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: '/^is[A-Z]/'
+
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
     message: '{{error}}'
@@ -524,6 +548,14 @@ rules:
       functionOptions:
         match: '/\}$/'
 
+  az-readonly-in-response-schema:
+    description: Properties in response-only schemas should not be marked as readOnly true
+    severity: warn
+    formats: ['oas2']
+    given: $.definitions[*]
+    then:
+      function: readonly-in-response-schema
+
   az-request-body-not-allowed:
     description: A get or delete operation must not accept a body parameter.
     severity: error
@@ -569,14 +601,6 @@ rules:
       function: pattern
       functionOptions:
         notMatch: '/^array$/'
-
-  az-readonly-in-response-schema:
-    description: Properties in response-only schemas should not be marked as readOnly true
-    severity: warn
-    formats: ['oas2']
-    given: $.definitions[*]
-    then:
-      function: readonly-in-response-schema
 
   az-schema-description-or-title:
     description: All schemas should have a description or title.
