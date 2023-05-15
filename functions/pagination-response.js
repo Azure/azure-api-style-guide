@@ -59,6 +59,11 @@ module.exports = (operation, _opts, paths) => {
           message: `\`${nextLinkName}\` property in pageable response should be type: string`,
           path: [...path, 'responses', resp, 'schema', 'properties', nextLinkName, 'type'],
         });
+      } else if (responseSchema.properties[nextLinkName].format !== 'url') {
+        errors.push({
+          message: `\`${nextLinkName}\` property in pageable response should be format: url`,
+          path: [...path, 'responses', resp, 'schema', 'properties', nextLinkName, 'format'],
+        });
       }
       if (responseSchema.required?.includes(nextLinkName)) {
         errors.push({
