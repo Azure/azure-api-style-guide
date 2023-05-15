@@ -68,6 +68,7 @@ test('az-pagination-response should find errors in value property', () => {
                   },
                   nextLink: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value'],
@@ -91,6 +92,7 @@ test('az-pagination-response should find errors in value property', () => {
                   },
                   nextLink: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
               },
@@ -113,6 +115,7 @@ test('az-pagination-response should find errors in value property', () => {
                   },
                   nextLink: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value'],
@@ -164,6 +167,29 @@ test('az-pagination-response should find errors in nextLink property', () => {
           },
         },
       },
+      '/test5a': {
+        get: {
+          responses: {
+            200: {
+              description: 'Success',
+              schema: {
+                properties: {
+                  value: {
+                    type: 'array',
+                  },
+                  nextLink: {
+                    type: 'string',
+                  },
+                },
+                required: ['value'],
+              },
+            },
+          },
+          'x-ms-pageable': {
+            nextLinkName: 'nextLink',
+          },
+        },
+      },
       '/test6': {
         get: {
           responses: {
@@ -176,6 +202,7 @@ test('az-pagination-response should find errors in nextLink property', () => {
                   },
                   nextPage: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value', 'nextPage'],
@@ -213,13 +240,15 @@ test('az-pagination-response should find errors in nextLink property', () => {
     },
   };
   return linter.run(oasDoc).then((results) => {
-    expect(results.length).toBe(3);
+    expect(results.length).toBe(4);
     expect(results[0].path.join('.')).toBe('paths./test5.get.responses.200.schema.properties.nextLink.type');
     expect(results[0].message).toBe('`nextLink` property in pageable response should be type: string');
-    expect(results[1].path.join('.')).toBe('paths./test6.get.responses.200.schema.required');
-    expect(results[1].message).toBe('`nextPage` property in pageable response should be optional.');
-    expect(results[2].path.join('.')).toBe('paths./test7.get.responses.200.schema.properties');
-    expect(results[2].message).toBe('Response body schema of pageable response should contain top-level property `nextLink`');
+    expect(results[1].path.join('.')).toBe('paths./test5a.get.responses.200.schema.properties.nextLink');
+    expect(results[1].message).toBe('`nextLink` property in pageable response should be format: url');
+    expect(results[2].path.join('.')).toBe('paths./test6.get.responses.200.schema.required');
+    expect(results[2].message).toBe('`nextPage` property in pageable response should be optional.');
+    expect(results[3].path.join('.')).toBe('paths./test7.get.responses.200.schema.properties');
+    expect(results[3].message).toBe('Response body schema of pageable response should contain top-level property `nextLink`');
   });
 });
 
@@ -240,6 +269,7 @@ test('az-pagination-response should find no errors', () => {
                   },
                   nextLink: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value'],
@@ -264,6 +294,7 @@ test('az-pagination-response should find no errors', () => {
                   },
                   nextLink: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value'],
@@ -288,6 +319,7 @@ test('az-pagination-response should find no errors', () => {
                   },
                   nextPage: {
                     type: 'string',
+                    format: 'url',
                   },
                 },
                 required: ['value'],
