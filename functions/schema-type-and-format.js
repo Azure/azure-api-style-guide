@@ -15,7 +15,7 @@ module.exports = function checkTypeAndFormat(schema, options, { path }) {
     // OAS-defined formats
     'byte', 'binary', 'date', 'date-time', 'password',
     // Additional formats recognized by autorest
-    'char', 'time', 'date-time-rfc1123', 'duration', 'uuid', 'base64url', 'url',
+    'char', 'time', 'date-time-rfc1123', 'duration', 'uuid', 'base64url', 'url', 'uri',
     'odata-query', 'certificate',
   ];
 

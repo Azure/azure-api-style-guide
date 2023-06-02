@@ -312,6 +312,7 @@ The well-defined type/format combinations are:
 | uuid |  | from [autorest][autorest] |
 | base64url |  | from [autorest][autorest] |
 | url |  | from [autorest][autorest] |
+| uri |  | from [autorest][autorest] |
 | odata-query |  | from [autorest][autorest] |
 | certificate |  | from [autorest][autorest] |
 
