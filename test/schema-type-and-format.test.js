@@ -227,6 +227,10 @@ test('az-schema-type-and-format should find no errors', () => {
         type: 'string',
         format: 'url',
       },
+      PropZZ2: {
+        type: 'string',
+        format: 'uri',
+      },
       ModelA: {
         type: 'object',
         properties: {
