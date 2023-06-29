@@ -63,6 +63,16 @@ test('az-schema-type-and-format should find errors', () => {
             },
           },
         },
+        put: {
+          responses: {
+            200: {
+              description: 'Success',
+              schema: {
+                $ref: '#/definitions/ModelB',
+              },
+            },
+          },
+        },
       },
     },
     definitions: {
@@ -108,10 +118,22 @@ test('az-schema-type-and-format should find errors', () => {
           },
         },
       },
+      ModelB: {
+        type: 'object',
+        properties: {
+          things: {
+            type: 'array',
+            items: {
+              type: 'string',
+              format: 'whacky',
+            },
+          },
+        },
+      },
     },
   };
   return linter.run(oasDoc).then((results) => {
-    expect(results.length).toBe(10);
+    expect(results.length).toBe(11);
     expect(results[0].path.join('.')).toBe('paths./test1.post.parameters.0.schema.properties.prop1.format');
     expect(results[0].message).toBe('Schema with type: integer has unrecognized format: int52');
     expect(results[1].path.join('.')).toBe('paths./test1.post.parameters.0.schema.properties.prop2.properties.prop3.format');
@@ -132,6 +154,8 @@ test('az-schema-type-and-format should find errors', () => {
     expect(results[8].message).toBe('Schema with type: integer should specify format');
     expect(results[9].path.join('.')).toBe('paths./test1.post.responses.200.schema.properties.propZZ.format');
     expect(results[9].message).toBe('Schema with type: string has unrecognized format: ZZTop');
+    expect(results[10].path.join('.')).toBe('paths./test1.put.responses.200.schema.properties.things.items.format');
+    expect(results[10].message).toBe('Schema with type: string has unrecognized format: whacky');
   });
 });
 
