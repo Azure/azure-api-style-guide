@@ -72,6 +72,12 @@ module.exports = function checkTypeAndFormat(schema, options, { path }) {
     }
   }
 
+  if (schema.type === 'array') {
+    errors.push(
+      ...checkTypeAndFormat(schema.items, options, { path: [...path, 'items'] }),
+    );
+  }
+
   if (schema.allOf && Array.isArray(schema.allOf)) {
     // eslint-disable-next-line no-restricted-syntax
     for (const [index, value] of schema.allOf.entries()) {
