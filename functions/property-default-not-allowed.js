@@ -10,7 +10,7 @@ module.exports = function propertyDefaultNotAllowed(schema, options, { path }) {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const prop of schema.required || []) {
-    if (schema.properties[prop]?.default) {
+    if (schema.properties?.[prop]?.default) {
       errors.push({
         message: `Schema property "${prop}" is required and cannot have a default`,
         path: [...path, 'properties', prop, 'default'],
