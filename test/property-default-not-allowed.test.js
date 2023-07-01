@@ -33,6 +33,18 @@ test('az-property-default-not-allowed should find errors', () => {
           },
         },
       },
+      '/path2': {
+        get: {
+          responses: {
+            200: {
+              description: 'OK',
+              schema: {
+                $ref: '#/definitions/AnotherModel',
+              },
+            },
+          },
+        },
+      },
     },
     definitions: {
       MyBodyModel: {
@@ -78,6 +90,20 @@ test('az-property-default-not-allowed should find errors', () => {
             default: 'baz',
           },
         },
+      },
+      AnotherModel: {
+        type: 'object',
+        required: ['foo'],
+        allOf: [
+          {
+            properties: {
+              foo: {
+                type: 'string',
+                default: 'qux',
+              },
+            },
+          },
+        ],
       },
     },
   };
