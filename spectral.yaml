@@ -4,6 +4,7 @@ functions:
   - consistent-response-body
   - error-response
   - has-header
+  - naming-convention
   - operation-id
   - pagination-parameters
   - operation-security
@@ -64,6 +65,17 @@ rules:
       field: enum
       function: falsy
 
+  az-boolean-naming-convention:
+    description: Do not use "is" prefix in names of boolean values
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $
+    then:
+      function: naming-convention
+      functionOptions:
+        type: boolean
+        notMatch: '^is[A-Z]'
+
   az-consistent-response-body:
     description: Ensure the get, put, and patch response body schemas are consistent.
     message: '{{error}}'
@@ -81,6 +93,17 @@ rules:
     then:
       field: default
       function: truthy
+
+  az-datetime-naming-convention:
+    description: Use an "At" suffix in names of date-time values.
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $
+    then:
+      function: naming-convention
+      functionOptions:
+        type: date-time
+        match: 'At$'
 
   az-delete-response-codes:
     description: A delete operation should have a 204 response.
@@ -524,6 +547,14 @@ rules:
       functionOptions:
         match: '/\}$/'
 
+  az-readonly-in-response-schema:
+    description: Properties in response-only schemas should not be marked as readOnly true
+    severity: warn
+    formats: ['oas2']
+    given: $.definitions[*]
+    then:
+      function: readonly-in-response-schema
+
   az-request-body-not-allowed:
     description: A get or delete operation must not accept a body parameter.
     severity: error
@@ -569,14 +600,6 @@ rules:
       function: pattern
       functionOptions:
         notMatch: '/^array$/'
-
-  az-readonly-in-response-schema:
-    description: Properties in response-only schemas should not be marked as readOnly true
-    severity: warn
-    formats: ['oas2']
-    given: $.definitions[*]
-    then:
-      function: readonly-in-response-schema
 
   az-schema-description-or-title:
     description: All schemas should have a description or title.
