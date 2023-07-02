@@ -33,6 +33,9 @@ of defining api-version as an enum with a single value -- the most current API v
 This requires removing the old API version when a new version is defined,
 which is disallowed by the breaking changes policy.
 
+### az-boolean-names-convention
+
+Do not use "is" prefix in names of boolean values.
 ### az-consistent-response-body
 
 For a path with a "create" operation (put or patch that returns 201), the 200 response of
@@ -42,6 +45,10 @@ as the create operation 201 response.
 ### az-default-response
 
 All operations should have a default (error) response.
+
+### az-datetime-naming-convention
+
+Use an "At" suffix in names of date-time values.
 
 ### az-delete-response-codes
 
