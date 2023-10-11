@@ -244,7 +244,7 @@ test('az-pagination-response should find errors in nextLink property', () => {
     expect(results[0].path.join('.')).toBe('paths./test5.get.responses.200.schema.properties.nextLink.type');
     expect(results[0].message).toBe('`nextLink` property in pageable response should be type: string');
     expect(results[1].path.join('.')).toBe('paths./test5a.get.responses.200.schema.properties.nextLink');
-    expect(results[1].message).toBe('`nextLink` property in pageable response should be format: url');
+    expect(results[1].message).toBe('`nextLink` property in pageable response should be format: uri');
     expect(results[2].path.join('.')).toBe('paths./test6.get.responses.200.schema.required');
     expect(results[2].message).toBe('`nextPage` property in pageable response should be optional.');
     expect(results[3].path.join('.')).toBe('paths./test7.get.responses.200.schema.properties');
@@ -294,7 +294,7 @@ test('az-pagination-response should find no errors', () => {
                   },
                   nextLink: {
                     type: 'string',
-                    format: 'url',
+                    format: 'uri',
                   },
                 },
                 required: ['value'],

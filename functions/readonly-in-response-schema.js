@@ -15,7 +15,7 @@ function getRequestSchemas(oasDoc) {
   const getOps = ({put, post, patch}) => [put, post, patch];
   const topLevelRequestSchemas = Object.values(oasDoc.paths || {})
     .flatMap(getOps).filter(Boolean)
-    .flatMap(({parameters}) => parameters.filter(({in: location}) => location === 'body'))
+    .flatMap(({parameters}) => parameters?.filter(({in: location}) => location === 'body') || [])
     .flatMap(({schema}) => (schema ? [schema] : []))
     .filter(({$ref}) => $ref && $ref.match(/^#\/definitions\//))
     .map(({$ref}) => $ref.replace(/^#\/definitions\//, ''));

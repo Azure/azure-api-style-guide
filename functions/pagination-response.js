@@ -54,14 +54,16 @@ module.exports = (operation, _opts, paths) => {
     // Check nextLink property
     const nextLinkName = operation['x-ms-pageable'].nextLinkName || 'nextLink';
     if (responseSchema.properties && nextLinkName in responseSchema.properties) {
-      if (responseSchema.properties[nextLinkName].type !== 'string') {
+      const nextLinkProperty = responseSchema.properties[nextLinkName];
+      if (nextLinkProperty.type !== 'string') {
         errors.push({
           message: `\`${nextLinkName}\` property in pageable response should be type: string`,
           path: [...path, 'responses', resp, 'schema', 'properties', nextLinkName, 'type'],
         });
-      } else if (responseSchema.properties[nextLinkName].format !== 'url') {
+      } else if (nextLinkProperty.format !== 'uri' && nextLinkProperty.format !== 'url') {
+        // Allow "uri" or "url", but prefer "uri"
         errors.push({
-          message: `\`${nextLinkName}\` property in pageable response should be format: url`,
+          message: `\`${nextLinkName}\` property in pageable response should be format: uri`,
           path: [...path, 'responses', resp, 'schema', 'properties', nextLinkName, 'format'],
         });
       }
