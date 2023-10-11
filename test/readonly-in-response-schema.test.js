@@ -111,6 +111,15 @@ test('az-readonly-in-response-schema should not find errors', () => {
           },
         },
       },
+      '/test3': {
+        post: {
+          responses: {
+            200: {
+              description: 'Success',
+            },
+          },
+        },
+      },
     },
     definitions: {
       Model1: {

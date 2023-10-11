@@ -377,6 +377,8 @@ rules:
     description: All parameters should have a description.
     message: Parameter should have a description.
     severity: warn
+    # In oas3 the description might be within the schema -- should not flag those
+    formats: ['oas2']
     given:
     - $.paths[*].parameters.*
     - $.paths.*[get,put,post,patch,delete,options,head].parameters.*

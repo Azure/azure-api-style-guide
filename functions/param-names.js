@@ -32,7 +32,8 @@ module.exports = (targetVal, _opts, paths) => {
       ];
     }
   } else if (targetVal.in === 'header') {
-    if (!targetVal.name.match(/^[A-Za-z][a-z0-9]*(-[A-Za-z][a-z0-9]*)*$/)) {
+    // Tiny fix to allow for ID suffixes on header parameters e.g. Repeatability-Request-ID
+    if (!targetVal.name.match(/^[A-Za-z][a-z0-9]*(-[A-Za-z][a-z0-9]*)*(-ID)?$/)) {
       return [
         {
           message: `header parameter name "${targetVal.name}" should be kebab case.`,
