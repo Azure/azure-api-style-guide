@@ -246,6 +246,10 @@ Put operations are typically issued on a specific resource whose id is the final
 Therefore, it is uncommon for a put operation to be defined on a path that does not have a path parameter
 as the final path segment.
 
+### az-put-request-and-response-body
+
+A PUT operation should use the same schema for the request and response body [ref](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#rest-response-body-is-resource-schema).
+
 ### az-readonly-in-response-schema
 
 Don't mark properties as `readOnly: true` in schemas that are only used within response bodies.
