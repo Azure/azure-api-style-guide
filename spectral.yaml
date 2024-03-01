@@ -16,6 +16,7 @@ functions:
   - patch-content-type
   - path-param-schema
   - path-param-names
+  - put-request-and-response-body
   - property-default-not-allowed
   - readonly-in-response-schema
   - security-definitions
@@ -548,6 +549,16 @@ rules:
       function: pattern
       functionOptions:
         match: '/\}$/'
+
+  az-put-request-and-response-body:
+    description: A PUT operation should use the same schema for the request and response body.
+    severity: info
+    formats: ['oas2']
+    # Run on the unresolved document so that we compare the $ref'ed schema
+    resolved: false
+    given: $.paths[*].put
+    then:
+      function: put-request-and-response-body
 
   az-readonly-in-response-schema:
     description: Properties in response-only schemas should not be marked as readOnly true
