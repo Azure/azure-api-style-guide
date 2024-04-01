@@ -22,12 +22,14 @@ functions:
   - security-definitions
   - security-requirements
   - schema-type-and-format
+  - unused-definition
   - version-policy
 rules:
   info-contact: off
   no-$ref-siblings: off
   oas2-api-host: off
   oas2-api-schemes: off
+  oas2-unused-definition: off
   openapi-tags: off
   operation-description: off
   operation-tags: off
@@ -705,6 +707,15 @@ rules:
     then:
       field: schema
       function: truthy
+
+  az-unused-definition:
+    description: Potentially unused definition has been detected.
+    severity: warn
+    formats: ['oas2']
+    resolved: false
+    given: $.definitions
+    then:
+      function: unused-definition
 
   az-version-convention:
     description: API version should be a date in YYYY-MM-DD format, optionally suffixed with '-preview'.
