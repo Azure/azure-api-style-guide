@@ -429,11 +429,10 @@ rules:
     description: Patch on a path that does not end with a path parameter is uncommon.
     severity: info
     formats: ['oas2', 'oas3']
-    given: $.paths[*].patch^~
+    given: $.paths[?(!@path.match(/\}']$/))]
     then:
-      function: pattern
-      functionOptions:
-        match: '/\}$/'
+      field: patch
+      function: falsy
 
   # Static path segments should be kebab-case
   az-path-case-convention:
