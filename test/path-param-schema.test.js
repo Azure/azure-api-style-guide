@@ -1,4 +1,5 @@
 const { linterForRule } = require('./utils');
+require('./matchers');
 
 let linter;
 
@@ -92,15 +93,22 @@ test('az-path-parameter-schema should find errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(4);
-    expect(results[0].path.join('.')).toBe('paths./foo/{p1}.parameters.0.type');
-    expect(results[0].message).toContain('should be defined as type: string');
-    expect(results[1].path.join('.')).toBe('paths./bar/{p2}.put.parameters.0');
-    expect(results[1].message).toContain('should specify a maximum length');
-    expect(results[1].message).toContain('and characters allowed');
-    expect(results[2].path.join('.')).toBe('paths./baz/{p3}/qux/{p4}.put.parameters.1');
-    expect(results[2].message).toContain('should specify characters allowed');
-    expect(results[3].path.join('.')).toBe('paths./foobar/{p5}.put.parameters.0.maxLength');
-    expect(results[3].message).toContain('should be less than');
+    expect(results).toContainMatch({
+      path: ['paths', '/foo/{p1}', 'parameters', '0', 'type'],
+      message: 'Path parameter should be defined as type: string.',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/bar/{p2}', 'put', 'parameters', '0'],
+      message: 'Path parameter should specify a maximum length (maxLength) and characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/baz/{p3}/qux/{p4}', 'put', 'parameters', '1'],
+      message: 'Path parameter should specify characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/foobar/{p5}', 'put', 'parameters', '0', 'maxLength'],
+      message: 'Path parameter maximum length should be less than 2083',
+    });
   });
 });
 
@@ -179,13 +187,18 @@ test('az-path-parameter-schema should find errors in patch operations', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(3);
-    expect(results[0].path.join('.')).toBe('paths./bar/{p2}.patch.parameters.0');
-    expect(results[0].message).toContain('should specify a maximum length');
-    expect(results[0].message).toContain('and characters allowed');
-    expect(results[1].path.join('.')).toBe('paths./baz/{p3}/qux/{p4}.patch.parameters.1');
-    expect(results[1].message).toContain('should specify characters allowed');
-    expect(results[2].path.join('.')).toBe('paths./foobar/{p5}.patch.parameters.0.maxLength');
-    expect(results[2].message).toContain('should be less than');
+    expect(results).toContainMatch({
+      path: ['paths', '/bar/{p2}', 'patch', 'parameters', '0'],
+      message: 'Path parameter should specify a maximum length (maxLength) and characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/baz/{p3}/qux/{p4}', 'patch', 'parameters', '1'],
+      message: 'Path parameter should specify characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/foobar/{p5}', 'patch', 'parameters', '0', 'maxLength'],
+      message: 'Path parameter maximum length should be less than 2083',
+    });
   });
 });
 
@@ -416,15 +429,22 @@ test('az-path-parameter-schema should find oas3 errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(4);
-    expect(results[0].path.join('.')).toBe('paths./foo/{p1}.parameters.0.schema.type');
-    expect(results[0].message).toContain('should be defined as type: string');
-    expect(results[1].path.join('.')).toBe('paths./bar/{p2}.put.parameters.0.schema');
-    expect(results[1].message).toContain('should specify a maximum length');
-    expect(results[1].message).toContain('and characters allowed');
-    expect(results[2].path.join('.')).toBe('paths./baz/{p3}/qux/{p4}.put.parameters.1.schema');
-    expect(results[2].message).toContain('should specify characters allowed');
-    expect(results[3].path.join('.')).toBe('paths./foobar/{p5}.put.parameters.0.maxLength');
-    expect(results[3].message).toContain('should be less than');
+    expect(results).toContainMatch({
+      path: ['paths', '/foo/{p1}', 'parameters', '0', 'schema', 'type'],
+      message: 'Path parameter should be defined as type: string.',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/bar/{p2}', 'put', 'parameters', '0', 'schema'],
+      message: 'Path parameter should specify a maximum length (maxLength) and characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/baz/{p3}/qux/{p4}', 'put', 'parameters', '1', 'schema'],
+      message: 'Path parameter should specify characters allowed (pattern).',
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/foobar/{p5}', 'put', 'parameters', '0', 'maxLength'],
+      message: 'Path parameter maximum length should be less than 2083',
+    });
   });
 });
 
