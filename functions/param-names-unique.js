@@ -38,12 +38,10 @@ module.exports = (pathItem, _opts, paths) => {
   pathDups.forEach((dup) => {
     // get the index of all names that match dup
     const dupKeys = [...pathParams.keys()].filter((k) => canonical(pathParams[k]) === dup);
-    // Refer back to the first one
-    const first = `parameters.${dupKeys[0]}`;
     // Report errors for all the others
     dupKeys.slice(1).forEach((key) => {
       errors.push({
-        message: `Duplicate parameter name (ignoring case) with ${first}.`,
+        message: `Duplicate parameter name (ignoring case): ${dup}.`,
         path: [...path, 'parameters', key, 'name'],
       });
     });
@@ -61,13 +59,10 @@ module.exports = (pathItem, _opts, paths) => {
       dups.forEach((dup) => {
         // get the index of all names that match dup
         const dupKeys = [...allParams.keys()].filter((k) => canonical(allParams[k]) === dup);
-        // Refer back to the first one - could be path or method
-        const first = dupKeys[0] < pathParams.length ? `parameters.${dupKeys[0]}`
-          : `${method}.parameters.${dupKeys[0] - pathParams.length}`;
         // Report errors for any others that are method parameters
         dupKeys.slice(1).filter((k) => k >= pathParams.length).forEach((key) => {
           errors.push({
-            message: `Duplicate parameter name (ignoring case) with ${first}.`,
+            message: `Duplicate parameter name (ignoring case): ${dup}.`,
             path: [...path, method, 'parameters', key - pathParams.length, 'name'],
           });
         });

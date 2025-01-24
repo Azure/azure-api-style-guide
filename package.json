@@ -15,6 +15,7 @@
     "url": "https://github.com/Azure/azure-api-style-guide"
   },
   "dependencies": {
+    "@jest/globals": "^29.7.0",
     "@stoplight/spectral-functions": "^1.7.2"
   },
   "devDependencies": {

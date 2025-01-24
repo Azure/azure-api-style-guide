@@ -1,4 +1,5 @@
 const { linterForRule } = require('./utils');
+require('./matchers');
 
 let linter;
 
@@ -160,13 +161,27 @@ test('az-datetime-naming-convention should find errors', () => {
   };
   return linter.run(myOpenApiDocument).then((results) => {
     expect(results.length).toBe(7);
-    expect(results[0].path.join('.')).toBe('paths./path1.put.parameters.0.schema.properties.foo');
-    expect(results[1].path.join('.')).toBe('paths./path1.put.responses.200.schema.properties.bar');
-    expect(results[2].path.join('.')).toBe('paths./path2.put.parameters.0.schema.properties.foo');
-    expect(results[3].path.join('.')).toBe('paths./path2.put.responses.200.schema.properties.bar');
-    expect(results[4].path.join('.')).toBe('paths./path3.get.responses.200.schema.items.properties.foo');
-    expect(results[5].path.join('.')).toBe('paths./path4.post.responses.200.schema.allOf.0.properties.foo');
-    expect(results[6].path.join('.')).toBe('paths./path4.post.responses.200.schema.allOf.1.properties.bar');
+    expect(results).toContainMatch({
+      path: ['paths', '/path1', 'put', 'parameters', '0', 'schema', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path1', 'put', 'responses', '200', 'schema', 'properties', 'bar'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path2', 'put', 'parameters', '0', 'schema', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path2', 'put', 'responses', '200', 'schema', 'properties', 'bar'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path3', 'get', 'responses', '200', 'schema', 'items', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path4', 'post', 'responses', '200', 'schema', 'allOf', '0', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path4', 'post', 'responses', '200', 'schema', 'allOf', '1', 'properties', 'bar'],
+    });
   });
 });
 
@@ -336,14 +351,30 @@ test('az-datetime-naming-convention should find oas3 errors', () => {
   };
   return linter.run(myOpenApiDocument).then((results) => {
     expect(results.length).toBe(8);
-    expect(results[0].path.join('.')).toBe('paths./path1.put.requestBody.content.application/json.schema.properties.foo');
-    expect(results[1].path.join('.')).toBe('paths./path1.put.responses.200.content.application/json.schema.properties.bar');
-    expect(results[2].path.join('.')).toBe('paths./path2.put.requestBody.content.application/json.schema.properties.foo');
-    expect(results[3].path.join('.')).toBe('paths./path2.put.responses.200.content.application/json.schema.properties.bar');
-    expect(results[4].path.join('.')).toBe('paths./path3.get.responses.200.content.application/json.schema.anyOf.0.properties.foo');
-    expect(results[5].path.join('.')).toBe('paths./path3.get.responses.200.content.application/json.schema.anyOf.1.properties.bar');
-    expect(results[6].path.join('.')).toBe('paths./path4.post.responses.200.content.application/json.schema.oneOf.0.properties.foo');
-    expect(results[7].path.join('.')).toBe('paths./path4.post.responses.200.content.application/json.schema.oneOf.1.properties.bar');
+    expect(results).toContainMatch({
+      path: ['paths', '/path1', 'put', 'requestBody', 'content', 'application/json', 'schema', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path1', 'put', 'responses', '200', 'content', 'application/json', 'schema', 'properties', 'bar'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path2', 'put', 'requestBody', 'content', 'application/json', 'schema', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path2', 'put', 'responses', '200', 'content', 'application/json', 'schema', 'properties', 'bar'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path3', 'get', 'responses', '200', 'content', 'application/json', 'schema', 'anyOf', '0', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path3', 'get', 'responses', '200', 'content', 'application/json', 'schema', 'anyOf', '1', 'properties', 'bar'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path4', 'post', 'responses', '200', 'content', 'application/json', 'schema', 'oneOf', '0', 'properties', 'foo'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/path4', 'post', 'responses', '200', 'content', 'application/json', 'schema', 'oneOf', '1', 'properties', 'bar'],
+    });
   });
 });
 

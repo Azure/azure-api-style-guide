@@ -1,4 +1,5 @@
 const { linterForRule } = require('./utils');
+require('./matchers');
 
 let linter;
 
@@ -47,9 +48,15 @@ test('az-header-disallowed should find errors', () => {
   };
   return linter.run(oasDoc).then((results) => {
     expect(results.length).toBe(3);
-    expect(results[0].path.join('.')).toBe('paths./test1.parameters.0.name');
-    expect(results[1].path.join('.')).toBe('paths./test1.get.parameters.0.name');
-    expect(results[2].path.join('.')).toBe('paths./test1.get.parameters.1.name');
+    expect(results).toContainMatch({
+      path: ['paths', '/test1', 'parameters', '0', 'name'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/test1', 'get', 'parameters', '0', 'name'],
+    });
+    expect(results).toContainMatch({
+      path: ['paths', '/test1', 'get', 'parameters', '1', 'name'],
+    });
   });
 });
 
