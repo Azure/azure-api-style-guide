@@ -1,0 +1,264 @@
+extends:
+  - ../azure-api-style-guide/spectral.yaml
+  - [../azure-api-style-guide/alt-rules.yaml, off]
+# functionsDir: ../azure-api-style-guide/functions/
+# functions:
+#   - naming-convention
+# extends:
+# - https://raw.githubusercontent.com/azure/azure-api-style-guide/dogfood/spectral.yaml
+
+rules:
+  # Some rules are misbehaving for oas3 -- need to debug
+  # az-api-version-enum: off
+  # az-header-disallowed: off
+  # az-parameter-default-not-allowed: off
+  # az-property-description: off
+  # az-schema-description-or-title: off
+  # az-default-response: off
+  # az-error-response: off
+
+  openapi-parameter-names-convention:
+    description: Parameter names should be snake case.
+    message: Parameter name {{value}} should be snake case
+    severity: off
+    given:
+    - $.paths[*].parameters[?(@.in=='query')]
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: snake
+
+overrides:
+  - files:
+    # Ag Food
+    - specification/agrifood/data-plane/Microsoft.AgFoodPlatform/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      alt-datetime-naming-convention: warn
+
+  # Document Intelligence
+  - files:
+    - specification/ai/data-plane/DocumentIntelligence/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      az-error-code-response-header: off
+      az-path-case-convention: off
+
+  # Face
+  - files:
+    - specification/ai/data-plane/Face/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      alt-datetime-naming-convention: warn
+      az-delete-response-codes: off
+      az-path-case-convention: off
+      az-version-convention: off
+      az-version-policy: off
+
+  # Batch
+  - files:
+    - specification/batch/data-plane/**/*.json
+    rules:
+      az-property-description: off
+      az-parameter-names-convention: off
+
+  # OpenAI is an open-source project and uses different conventions from the standard Azure style.
+  - files:
+    - specification/cognitiveservices/data-plane/AzureOpenAI/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-parameter-names-convention: off
+      openapi-parameter-names-convention: warn
+      az-property-names-convention: off
+
+  # Cognitive Services Anomaly Detector
+  - files:
+    - specification/cognitiveservices/data-plane/AnomalyDetector/**/*.json
+    rules:
+      az-schema-description-or-title: off
+      az-version-convention: off
+      az-version-policy: off
+      # az-operation-id: off
+      # az-property-type: off
+      # az-patch-content-type: off
+      # oas2-valid-schema-example: off
+      # az-parameter-names-convention: off
+      # az-property-description: off
+      # az-lro-headers: off
+
+  # Cognitive Services - Form Recognizer
+  - files:
+    - specification/cognitiveservices/data-plane/FormRecognizer/**/*.json
+    rules:
+      az-path-case-convention: off
+      az-operation-id: off
+      az-error-code-response-header: off
+
+  # Cognitive Services - Language
+  - files:
+    - specification/cognitiveservices/data-plane/Language/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      alt-datetime-naming-convention: warn
+      az-error-code-response-header: off
+      # az-path-case-convention: off
+      # alt-path-case-convention: warn
+
+  # Cognitive Services - Speech
+  - files:
+    - specification/cognitiveservices/data-plane/Speech/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-datetime-naming-convention: off
+
+  # Communication
+  - files:
+    - specification/communication/data-plane/**/*.json
+    rules:
+      az-path-case-convention: off
+      alt-path-case-convention: warn
+
+  # Communication (Chat)
+  - files:
+    - specification/communication/data-plane/Chat/**/*.json
+    rules:
+      # GA Chat API defines explicit 4xx/5xx responses
+      az-default-response: off
+      az-datetime-naming-convention: off
+      az-error-code-response-header: off
+      # GA Chat API defines "maxPageSize" parameter
+      az-pagination-parameters: off
+      # alt-datetime-naming-convention: warn
+
+  # Confidential Ledger
+  - files:
+    - specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-operation-id: off
+      az-operation-security: off
+      az-path-case-convention: off
+      az-security-definitions: off
+
+  # Device Provisioning
+  - files:
+    - specification/deviceprovisioningservices/data-plane/Microsoft.Devices/**/*.json
+    rules:
+      az-path-case-convention: off
+      az-operation-security: off
+
+  # LoadTestService
+  - files:
+    - specification/loadtestservice/data-plane/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      alt-datetime-naming-convention: warn
+
+  # Health Insights Interop
+  - files:
+    - specification/hlsinterop/data-plane/**/*.yaml
+    rules:
+      az-path-case-convention: off
+      az-operation-security: off
+      info-description: off
+      oas3-api-servers: off
+
+  # Maps
+  - files:
+    - specification/maps/data-plane/Route/**/*.json
+    rules:
+      az-operation-id: off
+      az-pagination-response: off
+      az-readonly-in-response-schema: off
+
+  # Marketplace
+  - files:
+    - specification/marketplacecatalog/data-plane/**/*.json
+    rules:
+      az-security-definitions: off
+      az-operation-security: off
+
+  # OpenAI is an open-source project and uses different conventions from the standard Azure style.
+  - files:
+    - specification/cognitiveservices/data-plane/AzureOpenAI/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-parameter-names-convention: off
+      openapi-parameter-names-convention: warn
+      az-property-names-convention: off
+
+  # Form Recognizer
+  - files:
+    - specification/cognitiveservices/data-plane/FormRecognizer/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-path-case-convention: off
+      az-datetime-names-convention: off
+
+  # Purview Catalog (atlas)
+  - files:
+     - specification/purview/data-plane/Azure.Analytics.Purview.Catalog/**/*.json
+    rules:
+      # Atlas uses version in the path
+      az-version-policy: off
+      # Atlas uses POST for create
+      az-post-201-response: off
+      az-error-code-response-header: off
+      az-operation-security: off
+      az-path-case-convention: off
+
+  # Purview
+  - files:
+    - specification/purview/data-plane/Azure.Analytics.Purview.Share/**/*.json
+    rules:
+      az-error-code-response-header: off
+      #  az-operation-security: off
+      az-path-case-convention: off
+
+  # Purview Scanning
+  - files:
+    - specification/purview/data-plane/Azure.Analytics.Purview.Scanning/**/*.json
+    rules:
+      az-datetime-naming-convention: off
+      az-error-code-response-header: off
+      #  az-operation-security: off
+      az-path-case-convention: off
+      # Temporary - just to remove clutter
+      az-property-description: off
+      az-ms-enum-descriptions: off
+      az-readonly-in-response-schema: off
+      az-schema-names-convention: off
+      oas2-unused-definition: off
+
+  # RiskIQ
+  - files:
+    - specification/riskiq/data-plane/Microsoft.Easm/**/*.json
+    rules:
+      az-path-case-convention: off
+
+  # Search
+  - files:
+    - specification/search/data-plane/Azure.Search/**/*.json
+    rules:
+      az-error-code-response-header: off
+      az-nullable: off
+      az-parameter-names-convention: off
+      az-path-case-convention: off
+      az-path-characters: off
+      az-readonly-in-response-schema: off
+      oas2-unused-definition: off
+
+  # Synapse
+  - files:
+    - specification/synapse/data-plane/Microsoft.Synapse/**/*.json
+    rules:
+      az-schema-description-or-title: off
+      az-error-code-response-header: off
+
+  # Voice Services
+  - files:
+    - specification/voiceservices/data-plane/Microsoft.VoiceServices/**/*.json
+    rules:
+      az-pagination-parameters: off
