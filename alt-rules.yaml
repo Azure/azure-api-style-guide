@@ -1,0 +1,53 @@
+functionsDir: './functions'
+functions:
+- naming-convention
+rules:
+  alt-datetime-naming-convention:
+    description: Use a "DateTime" suffix in names of date-time values.
+    severity: warn
+    formats: ['oas2','oas3']
+    given: $
+    then:
+      function: naming-convention
+      functionOptions:
+        type: date-time
+        match: 'DateTime$'
+
+  # Static path segments should be camel-case
+  alt-path-case-convention:
+    description: Static path segments should be camel case.
+    message: Static path segments should be camel case.
+    severity: info
+    formats: ['oas2', 'oas3']
+    given: $.paths.*~
+    then:
+      function: pattern
+      functionOptions:
+        # Check each path segment individually and ignore param segments
+        # Note: the ':' is only allowed in the final path segment
+        match: '^(\/([a-z]+([A-Z][a-z0-9]+)*|{[^}]+}))*\/([a-z]+([A-Z][a-z0-9]+)*|{[^}]*})?(:[A-Za-z0-9]+)?$'
+
+  alt-nextlink-readonly:
+    description: Flag nextLink properties that are readOnly
+    severity: error
+    formats: ['oas2']
+    # This rule can report false positives if run on the resolved spec.
+    # Issue: https://github.com/stoplightio/spectral/issues/1316
+    resolved: false
+    given: $..[?(@.type === 'object' && @.properties)].properties.nextLink
+    then:
+      field: readOnly
+      function: falsy
+
+  openapi-parameter-names-convention:
+    description: Parameter names should be snake case.
+    message: Parameter name {{value}} should be snake case
+    severity: off
+    given:
+    - $.paths[*].parameters[?(@.in=='query')]
+    - $.paths.*[get,put,post,patch,delete,options,head].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: snake
