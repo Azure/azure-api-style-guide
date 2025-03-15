@@ -3,40 +3,54 @@
 This repository contains a [Style Guide for OpenAPI definitions](./openapi-style-guide.md) of Azure services.
 The Style Guide is a companion to the [Azure API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md), the [OpenAPI 2.0 specification](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/2.0.md), and the [OpenAPI 3.1 specification](https://spec.openapis.org/oas/v3.1.0).
 
-The repository also contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check 
-an API definition for conformance to the Azure API Guidelines and this Style Guide. 
+The repository also contains a [Spectral](https://github.com/stoplightio/spectral) ruleset to check
+an API definition for conformance to the Azure API Guidelines and this Style Guide.
 
-> **NOTE:** It is highly recommended that you leverage the Spectral rule set. Azure service teams have found Spectral to be very useful identifying many common mistakes that affect the overall quality of their Open API documentation. It's one of the first things the API Stewardship Board turns to when revieing an API specification. 
-> 
+> **NOTE:** It is highly recommended that you leverage the Spectral rule set. Azure service teams have found Spectral to be very useful identifying many common mistakes that affect the overall quality of their Open API documentation. It's one of the first things the API Stewardship Board turns to when revieing an API specification.
+>
 > However, the errors, warnings, and info messages identified by Spectral should be evaluated in the context of *your service*, and using *your judgement*. If you have any questions, concerns, or comments, please don't hesitate to start a discussion in the [API Stewardship Teams Channel](https://teams.microsoft.com/l/channel/19%3a3ebb18fded0e47938f998e196a52952f%40thread.tacv2/General?groupId=1a10b50c-e870-4fe0-8483-bf5542a8d2d8&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
 
 ## How to use the Spectral Ruleset
 
 ### Dependencies
 
-The Spectral Ruleset requires Node version 14 or later.
+The Spectral Ruleset requires Node version 20 or later.
 
 ### Install Spectral
 
 `npm i @stoplight/spectral-cli -g`
 
-### Usage
+### Create a Spectral configuration file
 
-You can specify the ruleset directly on the command line:
-
-`spectral lint -r https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml <api definition file>`
-
-Or you can create a Spectral configuration file (`.spectral.yaml`) that references the ruleset:
+Create a Spectral configuration file (`.spectral.yaml`) that references the Azure ruleset:
 
 ```yaml
 extends:
   - https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml
 ```
 
+You can further customize the ruleset by adding your own rules or overriding existing ones.
+For example, to disable the `info-description` rule, the configuration file would look like this:
+
+```yaml
+extends:
+  - https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml
+rules:
+  info-description: off
+```
+
+### Usage
+
+You can run the Spectral linter on an OpenAPI definition file using the following command:
+
+```bash
+spectral lint <path-to-openapi-definition-file>
+```
+
 ### Example
 
 ```bash
-spectral lint -r https://raw.githubusercontent.com/azure/azure-api-style-guide/main/spectral.yaml petstore.yaml
+spectral lint petstore.yaml
 ```
 
 ### Using the Spectral VSCode extension
@@ -67,8 +81,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
