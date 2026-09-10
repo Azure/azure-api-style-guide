@@ -1,3 +1,7 @@
+# ⚠️ Deprecation Notice
+
+Azure API specifications have moved to [TypeSpec](https://typespec.io/). As a result, the OpenAPI Spectral style rules maintained in this repository are no longer being actively maintained, since TypeSpec includes its own built-in linting capabilities. Consequently, this repository has been archived and is no longer under active development.
+
 # Azure API Style Guide
 
 This repository contains a [Style Guide for OpenAPI definitions](./openapi-style-guide.md) of Azure services.
